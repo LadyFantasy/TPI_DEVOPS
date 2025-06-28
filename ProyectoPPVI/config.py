@@ -10,7 +10,7 @@ if IS_PRODUCTION:
     DB_CONFIG = {
         'host': os.getenv('DB_HOST', 'pk3b0.h.filess.io'),
         'user': os.getenv('DB_USER', 'alojamientosomeguitas_particles'),
-        'password': os.getenv('DB_PASSWORD', '78257cb7780930b4a49e34a571e84c54848c62c9'),
+        'password': os.getenv('DB_PASSWORD', 'your-production-db-password'),
         'database': os.getenv('DB_NAME', 'alojamientosomeguitas_particles'),
         'port': int(os.getenv('DB_PORT', '3307'))
     }

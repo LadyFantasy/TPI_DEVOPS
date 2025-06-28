@@ -161,9 +161,6 @@ PPIV/
 ├── .dockerignore              # Archivos a ignorar en build
 ├── env.example                # Variables de entorno de ejemplo
 ├── init.sql                   # Script de inicialización de BD
-├── scripts/
-│   ├── start.sh              # Script de inicio
-│   └── stop.sh               # Script de parada
 ├── nginx/
 │   └── nginx.conf            # Configuración de reverse proxy
 ├── PI-PPIV-Front/
@@ -286,7 +283,11 @@ nano .env
 ### 3. Desplegar
 
 ```bash
-./scripts/start.sh
+# Construir y levantar servicios
+docker-compose up --build -d
+
+# O para desarrollo con hot reload
+docker-compose -f docker-compose.dev.yml up --build
 ```
 
 ## 🐛 Troubleshooting
@@ -392,3 +393,9 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ---
 
 **Desarrollado con ❤️ para el TP de DevOps**
+
+## ⚠️ Nota sobre el envío de mails en desarrollo
+
+> ⚠️ **IMPORTANTE:** Para que la funcionalidad de envío de mails funcione en desarrollo local, debes configurar tus propias credenciales SMTP válidas en el archivo `.env` (por ejemplo, una contraseña de aplicación de Gmail). Si no lo haces, el envío de mails no funcionará en local, aunque el resto de la aplicación sí.
+
+---

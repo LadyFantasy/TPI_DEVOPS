@@ -402,7 +402,7 @@ DB_HOST=pk3b0.h.filess.io
 DB_PORT=3307
 DB_NAME=alojamientosomeguitas_particles
 DB_USER=alojamientosomeguitas_particles
-DB_PASSWORD=78257cb7780930b4a49e34a571e84c54848c62c9
+DB_PASSWORD=your-production-db-password
 SECRET_KEY=tu-secret-key-super-segura
 JWT_SECRET_KEY=tu-jwt-secret-super-segura
 URL_FRONT=https://tu-frontend.vercel.app
@@ -874,3 +874,7 @@ Aunque no lo uso en este proyecto, entiendo los conceptos:
 ---
 
 **¡PPIV - Tu sistema de reservas para alojamientos temporales está listo para producción! 🏠✨**
+
+## ⚠️ Nota sobre el envío de mails en desarrollo
+
+> ⚠️ **IMPORTANTE:** Para que la funcionalidad de envío de mails funcione en desarrollo local, debes configurar tus propias credenciales SMTP válidas en el archivo `.env` (por ejemplo, una contraseña de aplicación de Gmail). Si no lo haces, el envío de mails no funcionará en local, aunque el resto de la aplicación sí.

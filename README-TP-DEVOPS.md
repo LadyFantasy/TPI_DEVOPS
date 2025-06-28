@@ -465,3 +465,9 @@ gh run list
 ---
 
 **Nota**: Este proyecto demuestra la aplicación práctica de principios DevOps en un entorno real, desde el desarrollo hasta el despliegue automatizado en la nube.
+
+## ⚠️ Nota sobre el envío de mails en desarrollo
+
+> ⚠️ **IMPORTANTE:** Para que la funcionalidad de envío de mails funcione en desarrollo local, debes configurar tus propias credenciales SMTP válidas en el archivo `.env` (por ejemplo, una contraseña de aplicación de Gmail). Si no lo haces, el envío de mails no funcionará en local, aunque el resto de la aplicación sí.
+
+---
