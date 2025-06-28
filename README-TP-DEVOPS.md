@@ -15,6 +15,49 @@ Esta es una aplicación web completa para la gestión de alquleres temporales, d
 - **Monitoreo**: Prometheus + Grafana
 - **Base de Datos**: Filess.io (MySQL)
 
+## 🌍 Entornos de Ejecución
+
+### 🔧 Desarrollo Local
+
+- **Docker Compose**: `docker-compose.dev.yml`
+- **Base de datos**: MySQL local (`ppiv_db`)
+- **Usuario DB**: `root`
+- **Configuración**: `IS_PRODUCTION=false`
+- **Hot reload**: Activado para desarrollo
+- **Uso**: Desarrollo y testing local
+
+### 🚀 Producción
+
+- **Docker Compose**: `docker-compose.yml`
+- **Base de datos**: MySQL en Filess.io (`alojamientosomeguitas_particles`)
+- **Usuario DB**: `alojamientosomeguitas_particles`
+- **Configuración**: `IS_PRODUCTION=true`
+- **Deploy**: Automático via GitHub Actions
+- **Uso**: Aplicación en producción
+
+### ⚙️ Configuración Automática
+
+El sistema detecta automáticamente el entorno y configura la base de datos correspondiente:
+
+```python
+# En config.py
+IS_PRODUCTION = os.getenv('IS_PRODUCTION', 'false').lower() == 'true'
+if IS_PRODUCTION:
+    # Usa Filess.io (producción)
+    DB_CONFIG = {
+        'host': 'pk3b0.h.filess.io',
+        'database': 'alojamientosomeguitas_particles',
+        # ...
+    }
+else:
+    # Usa MySQL local (desarrollo)
+    DB_CONFIG = {
+        'host': 'mysql',
+        'database': 'ppiv_db',
+        # ...
+    }
+```
+
 ## 🚀 Instrucciones para Ejecutar Localmente
 
 ### Prerrequisitos
@@ -31,21 +74,21 @@ git clone https://github.com/tu-usuario/PPIV.git
 cd PPIV
 ```
 
-### 2. Ejecutar con Docker Compose
+### 2. Ejecutar con Docker Compose (Desarrollo)
 
 ```bash
-# Construir y ejecutar todos los servicios
-docker-compose up --build
+# Usar configuración de desarrollo (recomendado)
+docker-compose -f docker-compose.dev.yml up --build
 
-# Ejecutar en segundo plano
-docker-compose up -d --build
+# O usar configuración de producción
+docker-compose up --build
 ```
 
 ### 3. Acceder a la Aplicación
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:5000
-- **Base de Datos**: localhost:3306
+- **Base de datos**: localhost:3306
 - **Grafana**: http://localhost:3001 (admin/admin)
 
 ### 4. Desarrollo Local (Opcional)

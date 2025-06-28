@@ -34,8 +34,8 @@ services:
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_NAME=${DB_NAME:-ppiv_db}
-      - DB_USER=${DB_USER:-ppiv_user}
-      - DB_PASSWORD=${DB_PASSWORD:-ppiv_password}
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-rootpassword}
       - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY:-dev-jwt-secret-key}
       - MAIL_SERVER=${MAIL_SERVER:-smtp.gmail.com}

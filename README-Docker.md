@@ -2,6 +2,46 @@
 
 Este documento describe cómo dockerizar y desplegar la aplicación PPIV (Sistema de Gestión de Propiedades) usando Docker y Docker Compose.
 
+## 🌍 Entornos de Docker
+
+### 🔧 Desarrollo Local
+
+- **Archivo**: `docker-compose.dev.yml`
+- **Base de datos**: MySQL local (`ppiv_db`)
+- **Usuario**: `root`
+- **Hot reload**: Activado para desarrollo
+- **Volúmenes**: Montaje de código fuente
+
+### 🚀 Producción
+
+- **Archivo**: `docker-compose.yml`
+- **Base de datos**: Filess.io (externa)
+- **Optimización**: Builds optimizados
+- **Nginx**: Reverse proxy incluido
+
+### ⚙️ Configuración Automática
+
+El sistema detecta automáticamente el entorno:
+
+```python
+# En config.py
+IS_PRODUCTION = os.getenv('IS_PRODUCTION', 'false').lower() == 'true'
+if IS_PRODUCTION:
+    # Usa Filess.io (producción)
+    DB_CONFIG = {
+        'host': 'pk3b0.h.filess.io',
+        'database': 'alojamientosomeguitas_particles',
+        # ...
+    }
+else:
+    # Usa MySQL local (desarrollo)
+    DB_CONFIG = {
+        'host': 'mysql',
+        'database': 'ppiv_db',
+        # ...
+    }
+```
+
 ## 📋 Requisitos Previos
 
 - Docker Desktop instalado
@@ -37,11 +77,14 @@ cp env.example .env
 # Editar .env con tus configuraciones
 ```
 
-### 3. Ejecutar con script automático
+### 3. Ejecutar en desarrollo local
 
 ```bash
-chmod +x scripts/start.sh
-./scripts/start.sh
+# Usar configuración de desarrollo (recomendado)
+docker-compose -f docker-compose.dev.yml up --build
+
+# O usar configuración de producción
+docker-compose up --build
 ```
 
 ### 4. Acceder a la aplicación
@@ -49,6 +92,22 @@ chmod +x scripts/start.sh
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:5000
 - **Base de datos**: localhost:3306
+
+### 🔄 Comandos de Desarrollo
+
+```bash
+# Desarrollo con hot reload
+docker-compose -f docker-compose.dev.yml up --build
+
+# Ver logs en tiempo real
+docker-compose -f docker-compose.dev.yml logs -f
+
+# Detener servicios de desarrollo
+docker-compose -f docker-compose.dev.yml down
+
+# Limpiar contenedores huérfanos
+docker-compose -f docker-compose.dev.yml down --remove-orphans
+```
 
 ## 🔧 Configuración Manual
 

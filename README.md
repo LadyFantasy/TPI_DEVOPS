@@ -15,6 +15,48 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 
 ---
 
+## 🌍 Entornos de Ejecución
+
+### 🔧 Desarrollo Local (Docker)
+
+- **Base de datos**: MySQL local en contenedor (`ppiv_db`)
+- **Usuario DB**: `root`
+- **Configuración**: `IS_PRODUCTION=false`
+- **Archivo**: `docker-compose.dev.yml`
+- **Uso**: Desarrollo y testing local
+
+### 🚀 Producción (Render + Vercel)
+
+- **Base de datos**: MySQL en Filess.io (`alojamientosomeguitas_particles`)
+- **Usuario DB**: `alojamientosomeguitas_particles`
+- **Configuración**: `IS_PRODUCTION=true`
+- **Deploy**: Automático via GitHub Actions
+- **Uso**: Aplicación en producción
+
+### ⚙️ Configuración Automática
+
+El sistema detecta automáticamente el entorno:
+
+```python
+# En config.py
+if IS_PRODUCTION:
+    # Usa Filess.io (producción)
+    DB_CONFIG = {
+        'host': 'pk3b0.h.filess.io',
+        'database': 'alojamientosomeguitas_particles',
+        # ...
+    }
+else:
+    # Usa MySQL local (desarrollo)
+    DB_CONFIG = {
+        'host': 'mysql',
+        'database': 'ppiv_db',
+        # ...
+    }
+```
+
+---
+
 ## 🏗️ Arquitectura del Sistema
 
 ```mermaid
@@ -803,7 +845,7 @@ Aunque no lo uso en este proyecto, entiendo los conceptos:
 - **🚀 [Deploy Guide](./README-DEPLOY.md)**: Guía de despliegue
 - **📸 [Images Guide](./docs/images/README.md)**: Guía de imágenes para docs
 - **📖 [README-GITHUB-ACTIONS.md](README-GITHUB-ACTIONS.md)**: Configuración de GitHub Actions
-- **�� [README-TP-DEVOPS.md](README-TP-DEVOPS.md)**: Trabajo Práctico de DevOps
+- **📖 [README-TP-DEVOPS.md](README-TP-DEVOPS.md)**: Trabajo Práctico de DevOps
 
 ---
 
