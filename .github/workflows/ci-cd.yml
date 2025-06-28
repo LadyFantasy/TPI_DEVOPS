@@ -10,6 +10,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
 
+# Force new execution - Updated Docker image naming fix
 jobs:
   test-backend:
     name: Test Backend
