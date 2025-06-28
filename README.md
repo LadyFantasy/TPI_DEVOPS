@@ -1,6 +1,6 @@
 # 🏠 PPIV - Sistema de Reservas para Alojamientos Temporales
 
-Sistema completo de gestión y reservas para alojamientos temporales (Airbnb-style) con frontend React, backend Flask, y pipeline CI/CD automatizado. Permite a propietarios gestionar sus propiedades y a huéspedes realizar reservas de forma intuitiva.
+Sistema completo de gestión y reservas para alojamientos temporales con frontend React, backend Flask, y pipeline CI/CD automatizado. Permite a propietarios gestionar sus propiedades y a huéspedes realizar el check-in.
 
 ## 🎯 Descripción del Sistema
 
@@ -8,10 +8,10 @@ Sistema completo de gestión y reservas para alojamientos temporales (Airbnb-sty
 
 - **🏠 Gestión de Propiedades**: Administración completa de unidades de alojamiento
 - **📅 Sistema de Reservas**: Calendario interactivo y proceso de reserva simplificado
-- **👥 Gestión de Usuarios**: Roles diferenciados (admin, propietarios, huéspedes)
+- **👥 Gestión de Usuarios**: CRUD de administradores del sistema
 - **💰 Gestión de Precios**: Multiplicadores por temporada y configuraciones flexibles
 - **📊 Reportes**: Informes detallados de ocupación y rentabilidad
-- **📧 Notificaciones**: Sistema de emails automáticos para confirmaciones
+- **📧 Notificaciones**: Sistema de emails automáticos para check-in
 
 ---
 
@@ -44,9 +44,9 @@ graph TB
 
 ### 🔧 Backend (Flask + Python)
 
-- **Framework**: Flask con Blueprints
+- **Framework**: Flask con rutas REST
 - **Autenticación**: JWT tokens
-- **Base de datos**: MySQL con SQLAlchemy
+- **Base de datos**: MySQL con Flask-MySQL
 - **Emails**: Flask-Mail con templates
 - **Deploy**: Render (automático)
 
@@ -54,7 +54,7 @@ graph TB
 
 - **Desarrollo**: MySQL en Docker
 - **Producción**: MySQL en Filess.io
-- **Migraciones**: Automáticas con SQLAlchemy
+- **Migraciones**: Scripts SQL manuales
 
 ---
 
@@ -72,6 +72,116 @@ graph LR
     D --> E
     E --> F[Deploy Render]
     E --> G[Deploy Vercel]
+```
+
+### 🔄 Flujo Detallado del Pipeline
+
+```mermaid
+graph TD
+    A[Developer Push to main] --> B[GitHub Repository]
+    B --> C[GitHub Actions Trigger]
+
+    C --> D[Checkout Code]
+    D --> E[Setup Python & Node.js]
+
+    E --> F[Install Dependencies]
+    F --> G[Run Backend Tests]
+    F --> H[Run Frontend Tests]
+    F --> I[Run Linting]
+
+    G --> J{Tests Pass?}
+    H --> J
+    I --> J
+
+    J -->|Yes| K[Build Docker Images]
+    J -->|No| Z[Fail Pipeline]
+
+    K --> L[Push to GitHub Container Registry]
+    L --> M[Security Scan]
+
+    M --> N[Deploy to Render Backend]
+    M --> O[Deploy to Vercel Frontend]
+
+    N --> P[Health Check Backend]
+    O --> Q[Health Check Frontend]
+
+    P --> R{Deploy Success?}
+    Q --> R
+
+    R -->|Yes| S[Notify Success]
+    R -->|No| T[Notify Failure]
+
+    S --> U[Update Monitoring]
+    T --> U
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style K fill:#e8f5e8
+    style N fill:#e3f2fd
+    style O fill:#f1f8e9
+    style S fill:#c8e6c9
+    style T fill:#ffcdd2
+```
+
+### 🏗️ Arquitectura de Infraestructura
+
+```mermaid
+graph TB
+    subgraph "GitHub"
+        A[Repository]
+        B[GitHub Actions]
+        C[Container Registry]
+    end
+
+    subgraph "Cloud Services"
+        D[Render - Backend]
+        E[Vercel - Frontend]
+        F[Filess.io - MySQL]
+    end
+
+    subgraph "Monitoring"
+        G[Prometheus]
+        H[Grafana]
+        I[Alert Manager]
+    end
+
+    A --> B
+    B --> C
+    B --> D
+    B --> E
+
+    D --> F
+    E --> D
+
+    D --> G
+    E --> G
+    G --> H
+    H --> I
+```
+
+### 🔄 Flujo de Desarrollo
+
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Git as GitHub
+    participant GA as GitHub Actions
+    participant Docker as Docker Registry
+    participant Render as Render
+    participant Vercel as Vercel
+    participant Monitor as Monitoring
+
+    Dev->>Git: Push to main
+    Git->>GA: Trigger workflow
+    GA->>GA: Run tests
+    GA->>GA: Build Docker images
+    GA->>Docker: Push images
+    GA->>Render: Deploy backend
+    GA->>Vercel: Deploy frontend
+    Render->>Monitor: Health check
+    Vercel->>Monitor: Health check
+    Monitor->>Dev: Notify status
 ```
 
 ### ✅ Jobs del Pipeline
@@ -126,6 +236,41 @@ _Pipeline completo funcionando en GitHub Actions con todos los jobs ejecutándos
 - **Última ejecución**: Exitoso
 - **Tasa de éxito**: 100%
 - **Tiempo total**: ~5-7 minutos
+
+### 📊 Estados del Pipeline
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Running: Trigger
+    Running --> Testing: Setup Complete
+    Testing --> Building: Tests Pass
+    Testing --> Failed: Tests Fail
+    Building --> Deploying: Build Success
+    Building --> Failed: Build Fail
+    Deploying --> Success: Deploy Success
+    Deploying --> Failed: Deploy Fail
+    Success --> [*]
+    Failed --> [*]
+```
+
+### 📈 Métricas de Monitoreo
+
+```mermaid
+graph TD
+    A[Application Metrics] --> B[CPU Usage]
+    A --> C[Memory Usage]
+    A --> D[Response Time]
+    A --> E[Error Rate]
+
+    B --> F[Grafana Dashboard]
+    C --> F
+    D --> F
+    E --> F
+
+    F --> G[Alert Rules]
+    G --> H[Email/Slack Notifications]
+```
 
 ---
 

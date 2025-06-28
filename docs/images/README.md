@@ -179,7 +179,7 @@ Esta carpeta contiene todas las imágenes y capturas de pantalla utilizadas en l
 ## 🔗 Referencias en Documentación
 
 - **README.md**: `./docs/images/pipeline%20okay.png`
-- **pipeline-diagram.md**: `./images/pipeline%20okay.png`
+- **README.md**: `./images/pipeline%20okay.png` (diagramas integrados en README principal)
 
 ---
 

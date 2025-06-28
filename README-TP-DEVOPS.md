@@ -13,7 +13,7 @@ Esta es una aplicación web completa para la gestión de alquleres temporales, d
 - **CI/CD**: GitHub Actions
 - **Deploy**: Render (Backend) + Vercel (Frontend)
 - **Monitoreo**: Prometheus + Grafana
-- **Infraestructura**: Terraform (AWS)
+- **Base de Datos**: Filess.io (MySQL)
 
 ## 🚀 Instrucciones para Ejecutar Localmente
 
@@ -222,36 +222,6 @@ env:
 - `docker-compose.yml` - Orquestación local
 - `docker-compose.monitoring.yml` - Stack de monitoreo
 
-## 🏗️ Infraestructura como Código (Terraform)
-
-### Estructura
-
-```
-terraform/
-├── main.tf              # Configuración principal
-├── variables.tf         # Variables
-└── modules/
-    └── vpc/            # Módulo VPC
-        └── main.tf
-```
-
-### Recursos Provisionados
-
-- **VPC** con subnets públicas y privadas
-- **ECS Cluster** para contenedores
-- **RDS** para base de datos
-- **Application Load Balancer**
-- **CloudWatch** para logs
-
-### Comandos Terraform
-
-```bash
-cd terraform
-terraform init
-terraform plan
-terraform apply
-```
-
 ## 📊 Monitoreo
 
 ### Stack de Monitoreo
@@ -311,7 +281,6 @@ PPIV/
 │   ├── Dockerfile
 │   └── tests/
 ├── .github/workflows/      # CI/CD
-├── terraform/              # IaC
 ├── monitoring/             # Prometheus + Grafana
 ├── docker-compose.yml      # Orquestación local
 └── README.md
@@ -404,7 +373,6 @@ gh run list
 5. ✅ **Build y push automático** a GitHub Container Registry
 6. ✅ **Deploy automático** en múltiples plataformas
 7. ✅ **Monitoreo completo** con Prometheus + Grafana
-8. ✅ **Infraestructura como código** con Terraform
 
 ### Beneficios Obtenidos
 
@@ -412,7 +380,6 @@ gh run list
 - **Despliegue confiable** y reproducible
 - **Monitoreo en tiempo real** de la aplicación
 - **Escalabilidad** con contenedores
-- **Infraestructura reproducible** con Terraform
 - **Registry de imágenes** centralizado en GitHub
 
 ### Tecnologías Aprendidas
@@ -420,7 +387,6 @@ gh run list
 - **Docker** y **Docker Compose**
 - **GitHub Actions** para CI/CD
 - **GitHub Container Registry** para imágenes Docker
-- **Terraform** para IaC
 - **Prometheus** y **Grafana** para monitoreo
 - **Render** y **Vercel** para deploy
 - **Selenium** para testing de UI
@@ -438,7 +404,6 @@ gh run list
 - Configuración de CI/CD
 - Dockerización de aplicaciones
 - Configuración de monitoreo
-- Infraestructura como código
 
 ### QA Engineer
 
