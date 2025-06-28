@@ -182,12 +182,13 @@ jobs:
       - name: Create lowercase image names
         id: image-names
         run: |
-          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          echo "backend-image=${{ env.REGISTRY }}/$REPO_NAME-backend" >> $GITHUB_OUTPUT
-          echo "frontend-image=${{ env.REGISTRY }}/$REPO_NAME-frontend" >> $GITHUB_OUTPUT
+          USERNAME=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
+          REPO_NAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
+          echo "backend-image=${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-backend" >> $GITHUB_OUTPUT
+          echo "frontend-image=${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-frontend" >> $GITHUB_OUTPUT
           echo "Created image names:"
-          echo "Backend: ${{ env.REGISTRY }}/$REPO_NAME-backend"
-          echo "Frontend: ${{ env.REGISTRY }}/$REPO_NAME-frontend"
+          echo "Backend: ${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-backend"
+          echo "Frontend: ${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-frontend"
 
       - name: Build and push backend image
         uses: docker/build-push-action@v5
