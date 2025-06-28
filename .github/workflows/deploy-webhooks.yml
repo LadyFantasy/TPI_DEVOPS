@@ -1,0 +1,124 @@
+name: Deploy Webhooks - PPIV
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: "production"
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  trigger-render-deploy:
+    name: Trigger Render Deploy
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+
+    steps:
+      - name: Trigger Render deployment via webhook
+        run: |
+          echo "🚀 Triggering Render deployment via webhook..."
+
+          if [ -n "${{ secrets.RENDER_WEBHOOK_URL }}" ]; then
+            echo "📡 Using Render webhook URL"
+            curl -X POST "${{ secrets.RENDER_WEBHOOK_URL }}"
+            echo "✅ Render webhook triggered successfully"
+          else
+            echo "⚠️  No RENDER_WEBHOOK_URL configured, relying on auto-deploy"
+            echo "📝 Render will automatically detect the push and start deployment"
+          fi
+
+          echo "🔗 Check your Render dashboard for deployment status"
+
+  trigger-vercel-deploy:
+    name: Trigger Vercel Deploy
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+
+    steps:
+      - name: Check Vercel deployment options
+        id: check_vercel
+        run: |
+          echo "🔍 Checking Vercel deployment options..."
+
+          if [ -n "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" ]; then
+            echo "📡 Using Vercel Deploy Hook (Free Plan)"
+            echo "deploy_method=hook" >> $GITHUB_OUTPUT
+          elif [ -n "${{ secrets.VERCEL_WEBHOOK_URL }}" ]; then
+            echo "📡 Using Vercel Webhook (Paid Plan)"
+            echo "deploy_method=webhook" >> $GITHUB_OUTPUT
+          else
+            echo "📡 Using Vercel Auto-Deploy (Free Plan)"
+            echo "deploy_method=auto" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger Vercel deployment
+        run: |
+          echo "🚀 Triggering Vercel deployment..."
+
+          if [ "${{ steps.check_vercel.outputs.deploy_method }}" == "hook" ]; then
+            echo "📡 Using Deploy Hook (Free Plan)"
+            curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"
+            echo "✅ Vercel Deploy Hook triggered successfully"
+          elif [ "${{ steps.check_vercel.outputs.deploy_method }}" == "webhook" ]; then
+            echo "📡 Using Webhook (Paid Plan)"
+            curl -X POST "${{ secrets.VERCEL_WEBHOOK_URL }}"
+            echo "✅ Vercel webhook triggered successfully"
+          else
+            echo "📡 Using Auto-Deploy (Free Plan)"
+            echo "📝 Vercel will automatically detect the push and start deployment"
+            echo "💡 To use Deploy Hooks, create one in Vercel Dashboard → Settings → Git → Deploy Hooks"
+          fi
+
+          echo "🔗 Check your Vercel dashboard for deployment status"
+
+  notify-deployment:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [trigger-render-deploy, trigger-vercel-deploy]
+    if: always()
+
+    steps:
+      - name: Deployment Summary
+        run: |
+          echo "🎉 Deployment Summary"
+          echo "=================="
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Triggered by: ${{ github.actor }}"
+          echo ""
+          echo "📋 Job Results:"
+          echo "  - Render Deploy: ${{ needs.trigger-render-deploy.result }}"
+          echo "  - Vercel Deploy: ${{ needs.trigger-vercel-deploy.result }}"
+          echo ""
+          echo "🔗 Deployment Links:"
+          echo "  - Render Dashboard: https://dashboard.render.com"
+          echo "  - Vercel Dashboard: https://vercel.com/dashboard"
+          echo ""
+          echo "📝 Deployment Method Status:"
+          if [ -n "${{ secrets.RENDER_WEBHOOK_URL }}" ]; then
+            echo "  - Render Webhook: ✅ Configured"
+          else
+            echo "  - Render Webhook: ⚠️  Not configured (using auto-deploy)"
+          fi
+
+          if [ -n "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}" ]; then
+            echo "  - Vercel Deploy Hook: ✅ Configured (Free Plan)"
+          elif [ -n "${{ secrets.VERCEL_WEBHOOK_URL }}" ]; then
+            echo "  - Vercel Webhook: ✅ Configured (Paid Plan)"
+          else
+            echo "  - Vercel: 📡 Using Auto-Deploy (Free Plan)"
+          fi
+
+          echo ""
+          echo "💡 Tips:"
+          echo "  - Deploy Hooks are free in Vercel"
+          echo "  - Webhooks require a paid plan"
+          echo "  - Auto-deploy works perfectly for most use cases"
