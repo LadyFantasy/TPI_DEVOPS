@@ -189,25 +189,12 @@ jobs:
           echo "Backend: ${{ env.REGISTRY }}/$REPO_NAME-backend"
           echo "Frontend: ${{ env.REGISTRY }}/$REPO_NAME-frontend"
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.image-names.outputs.backend-image }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha
-
       - name: Build and push backend image
         uses: docker/build-push-action@v5
         with:
           context: ./ProyectoPPVI
           push: true
-          tags: ${{ steps.image-names.outputs.backend-image }}:${{ steps.meta.outputs.version }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.image-names.outputs.backend-image }}:main
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -216,8 +203,7 @@ jobs:
         with:
           context: ./PI-PPIV-Front
           push: true
-          tags: ${{ steps.image-names.outputs.frontend-image }}:${{ steps.meta.outputs.version }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.image-names.outputs.frontend-image }}:main
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
