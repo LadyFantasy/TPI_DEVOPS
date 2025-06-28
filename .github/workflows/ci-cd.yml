@@ -184,13 +184,27 @@ jobs:
       - name: Create lowercase image names
         id: image-names
         run: |
+          # Force personal username format to avoid organization permissions
           USERNAME=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
           REPO_NAME=$(echo "${{ github.event.repository.name }}" | tr '[:upper:]' '[:lower:]')
           echo "backend-image=${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-backend" >> $GITHUB_OUTPUT
           echo "frontend-image=${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-frontend" >> $GITHUB_OUTPUT
-          echo "Created image names:"
+          echo "=== DOCKER IMAGE NAMES ==="
           echo "Backend: ${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-backend"
           echo "Frontend: ${{ env.REGISTRY }}/$USERNAME/$REPO_NAME-frontend"
+          echo "Username: $USERNAME"
+          echo "Repo Name: $REPO_NAME"
+          echo "=========================="
+
+      - name: Debug Docker Image Names
+        run: |
+          echo "=== DEBUG INFO ==="
+          echo "GitHub Actor: ${{ github.actor }}"
+          echo "Repository Name: ${{ github.event.repository.name }}"
+          echo "Registry: ${{ env.REGISTRY }}"
+          echo "Backend Image: ${{ steps.image-names.outputs.backend-image }}"
+          echo "Frontend Image: ${{ steps.image-names.outputs.frontend-image }}"
+          echo "=================="
 
       - name: Build and push backend image
         uses: docker/build-push-action@v5
