@@ -14,6 +14,7 @@ Este documento describe el flujo completo de **Continuous Integration/Continuous
 - [🔧 Configuración](#-configuración)
 - [📊 Monitoreo](#-monitoreo)
 - [🚨 Troubleshooting](#️-troubleshooting)
+- [📸 Capturas de Pantalla](#-capturas-de-pantalla)
 
 ---
 
@@ -40,6 +41,12 @@ graph TB
     style F fill:#007bff
     style I fill:#ffc107
 ```
+
+### 📸 Vista General del Pipeline
+
+<!-- Agregar aquí una captura de pantalla del workflow en GitHub Actions -->
+
+![GitHub Actions Workflow Overview](./docs/images/workflow-overview.png)
 
 ---
 
@@ -90,6 +97,12 @@ graph LR
     F --> G
 ```
 
+### 📸 Ejecución del Pipeline
+
+<!-- Agregar aquí una captura de pantalla de la ejecución en tiempo real -->
+
+![Pipeline Execution](./docs/images/pipeline-execution.png)
+
 ---
 
 ## ⚙️ Jobs y Steps
@@ -115,6 +128,12 @@ test-backend:
 5. **Run backend tests** - Ejecuta pytest con coverage
 6. **Upload coverage** - Sube reportes a Codecov
 
+### 📸 Tests Backend Exitosos
+
+<!-- Agregar aquí una captura de pantalla de los tests pasando -->
+
+![Backend Tests Success](./docs/images/backend-tests-success.png)
+
 ### 🎨 Job: `test-frontend`
 
 **Propósito**: Ejecutar tests del frontend React/Vite
@@ -132,6 +151,12 @@ test-frontend:
 3. **Install frontend dependencies** - npm ci
 4. **Run frontend tests** - npm run build
 5. **Upload frontend coverage** - Sube reportes
+
+### 📸 Tests Frontend Exitosos
+
+<!-- Agregar aquí una captura de pantalla de los tests pasando -->
+
+![Frontend Tests Success](./docs/images/frontend-tests-success.png)
 
 ### 🔍 Job: `lint`
 
@@ -151,6 +176,12 @@ lint:
 4. **Lint Python code** - Flake8 + Black
 5. **Lint JavaScript code** - ESLint
 6. **Lint Summary** - Resumen de resultados
+
+### 📸 Linting Results
+
+<!-- Agregar aquí una captura de pantalla del linting -->
+
+![Linting Results](./docs/images/linting-results.png)
 
 ### 🐳 Job: `build`
 
@@ -172,6 +203,12 @@ build:
 4. **Create lowercase image names** - Genera nombres válidos
 5. **Build and push backend image** - Construye imagen backend
 6. **Build and push frontend image** - Construye imagen frontend
+
+### 📸 Docker Build Success
+
+<!-- Agregar aquí una captura de pantalla del build exitoso -->
+
+![Docker Build Success](./docs/images/docker-build-success.png)
 
 ---
 
@@ -206,6 +243,12 @@ docker build -t ghcr.io/ladyfantasy/tpi_devops-backend:main ./ProyectoPPVI
 docker build -t ghcr.io/ladyfantasy/tpi_devops-frontend:main ./PI-PPIV-Front
 ```
 
+### 📸 GitHub Container Registry
+
+<!-- Agregar aquí una captura de pantalla del registry con las imágenes -->
+
+![GitHub Container Registry](./docs/images/ghcr-images.png)
+
 ---
 
 ## 🌐 Deploy Automático
@@ -231,6 +274,12 @@ graph LR
 - **Environment**: Python 3.11
 - **Auto-deploy**: Activado desde GitHub
 
+### 📸 Render Dashboard
+
+<!-- Agregar aquí una captura de pantalla del dashboard de Render -->
+
+![Render Dashboard](./docs/images/render-dashboard.png)
+
 ### Deploy a Vercel (Frontend)
 
 ```mermaid
@@ -251,6 +300,12 @@ graph LR
 - **Build Command**: `npm run build`
 - **Output Directory**: `dist`
 - **Auto-deploy**: Activado desde GitHub
+
+### 📸 Vercel Dashboard
+
+<!-- Agregar aquí una captura de pantalla del dashboard de Vercel -->
+
+![Vercel Dashboard](./docs/images/vercel-dashboard.png)
 
 ---
 
@@ -289,6 +344,12 @@ VITE_API_URL=https://your-backend-url.onrender.com
 | `RENDER_DEPLOY_HOOK_URL` | Webhook de Render          | `https://api.render.com/deploy/...`   |
 | `VERCEL_DEPLOY_HOOK_URL` | Webhook de Vercel          | `https://api.vercel.com/v1/hooks/...` |
 
+### 📸 GitHub Secrets Configuration
+
+<!-- Agregar aquí una captura de pantalla de la configuración de secrets -->
+
+![GitHub Secrets](./docs/images/github-secrets.png)
+
 ---
 
 ## 📊 Monitoreo
@@ -321,6 +382,12 @@ El pipeline incluye un job de notificación que:
 - ✅ **Notifica éxito** cuando todos los jobs pasan
 - ❌ **Notifica fallos** con detalles específicos
 - 📊 **Proporciona resumen** de cada job
+
+### 📸 Pipeline Metrics
+
+<!-- Agregar aquí una captura de pantalla de las métricas -->
+
+![Pipeline Metrics](./docs/images/pipeline-metrics.png)
 
 ---
 
@@ -382,6 +449,12 @@ docker build -t test-backend ./ProyectoPPVI
 docker build -t test-frontend ./PI-PPIV-Front
 ```
 
+### 📸 Error Logs Example
+
+<!-- Agregar aquí una captura de pantalla de logs de error -->
+
+![Error Logs Example](./docs/images/error-logs-example.png)
+
 ---
 
 ## 📈 Métricas de Rendimiento
@@ -403,6 +476,40 @@ docker build -t test-frontend ./PI-PPIV-Front
 | ---------- | ---------------- | -------- |
 | Backend    | ~85%             | > 80%    |
 | Frontend   | ~70%             | > 70%    |
+
+### 📸 Performance Dashboard
+
+<!-- Agregar aquí una captura de pantalla del dashboard de rendimiento -->
+
+![Performance Dashboard](./docs/images/performance-dashboard.png)
+
+---
+
+## 📸 Capturas de Pantalla
+
+### Workflow en Acción
+
+<!-- Aquí puedes agregar capturas de pantalla reales de tu pipeline -->
+
+#### 1. Vista General del Workflow
+
+![Workflow Overview](./docs/images/workflow-overview.png)
+
+#### 2. Jobs Ejecutándose
+
+![Jobs Running](./docs/images/jobs-running.png)
+
+#### 3. Tests Exitosos
+
+![Tests Success](./docs/images/tests-success.png)
+
+#### 4. Docker Build
+
+![Docker Build](./docs/images/docker-build.png)
+
+#### 5. Deploy Status
+
+![Deploy Status](./docs/images/deploy-status.png)
 
 ---
 
