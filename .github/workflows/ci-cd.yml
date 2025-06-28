@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
 
 jobs:
   test-backend:
@@ -179,11 +179,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create lowercase image names
+        id: image-names
+        run: |
+          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "backend-image=${{ env.REGISTRY }}/$REPO_NAME-backend" >> $GITHUB_OUTPUT
+          echo "frontend-image=${{ env.REGISTRY }}/$REPO_NAME-frontend" >> $GITHUB_OUTPUT
+          echo "Created image names:"
+          echo "Backend: ${{ env.REGISTRY }}/$REPO_NAME-backend"
+          echo "Frontend: ${{ env.REGISTRY }}/$REPO_NAME-frontend"
+
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ steps.image-names.outputs.backend-image }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -196,7 +206,7 @@ jobs:
         with:
           context: ./ProyectoPPVI
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:${{ steps.meta.outputs.version }}
+          tags: ${{ steps.image-names.outputs.backend-image }}:${{ steps.meta.outputs.version }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -206,7 +216,7 @@ jobs:
         with:
           context: ./PI-PPIV-Front
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:${{ steps.meta.outputs.version }}
+          tags: ${{ steps.image-names.outputs.frontend-image }}:${{ steps.meta.outputs.version }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
