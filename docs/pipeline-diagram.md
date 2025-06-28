@@ -219,7 +219,7 @@ graph LR
     J --> K[Success Notification]
 ```
 
-Para más detalles sobre la configuración de webhooks, consulta [webhooks-setup.md](./webhooks-setup.md).
+Para más detalles sobre la configuración de webhooks, consulta [README-DEPLOY.md](../README-DEPLOY.md).
 
 ## Pipeline Exitoso en Producción
 
