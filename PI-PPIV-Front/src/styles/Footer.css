@@ -1,0 +1,20 @@
+.footer__wrapper {
+  height: 3rem;
+  background-color: var(--color-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem;
+}
+
+.footer__link {
+  color: #fff;
+  font-size: 1.4rem;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.4s ease;
+}
+
+.footer__link:hover {
+  transform: scale(1.05);
+}

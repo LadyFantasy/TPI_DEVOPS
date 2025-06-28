@@ -1,0 +1,24 @@
+.admin-panel__background {
+  background-color: #ffffff;
+  height: 100vh;
+  padding-top: calc(4rem + 1rem);
+}
+
+.admins-title__header{
+  margin-top: 4rem;
+  font-size: 2rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+.admin-panel__title {
+  font-size: 4rem;
+  color: var(--color-primary);
+  font-weight: 400;
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.admin-panel__wrapper {
+  width: fit-content;
+  margin: 5rem auto;
+}

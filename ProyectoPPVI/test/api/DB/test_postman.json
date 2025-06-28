@@ -1,0 +1,492 @@
+{
+    "info": {
+        "_postman_id": "49a13abd-678e-4839-9273-e660605df9f9",
+        "name": "Pruebas de api/BDD",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "Login",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/login",
+                    "path": [
+                        "login"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"username\": \"guillermo.fullstack@gmail.com\",\n  \"password\": \"1234\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Register new admin",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/crearAdmin",
+                    "path": [
+                        "crearAdmin"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"username\": \"carol.ceron801@gmail.com\",\n  \"password\": \"1234\",\n  \"superUser\": \"True\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Generar reserva",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/api/terceros/almacenaReserva",
+                    "path": [
+                        "api",
+                        "terceros",
+                        "almacenaReserva"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTU2NDE2NSwianRpIjoiZDBkZjkyN2QtNjgwYy00ZWE0LTkwNjItY2NlNjljZWI5NjllIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcImlkXCI6IDI5LCBcInByaWNlXCI6IDEzMzMwOTc4fSIsIm5iZiI6MTc0OTU2NDE2NSwiY3NyZiI6ImNjMzRiODI2LTE2NTktNGY5Ny05ZjM1LWY3ZDU2Njc3ZWQ3ZSIsImV4cCI6MTc0OTU4MjE2NX0.zeMBdQCxm57arbF-_B_-0CScSFh880R2ZvH_sbllaNE"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"unit_id\" : 29, \"check_in_date\": \"2025-2-24\", \"check_out_date\": \"2025-3-1\", \"amount_paid\": 250, \"guest\":{\"name\":\"Guillermo\", \"mail\":\"guillermo.fulstack@gmail.com\", \"phone\":\"12345678\"}\n}"
+                }
+            }
+        },
+        {
+            "name": "Ver Admins",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:5001/verAdmins",
+                    "path": [
+                        "verAdmins"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Crear unidad",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/creaUnidad",
+                    "path": [
+                        "creaUnidad"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"rooms\":2, \"beds\":4, \"description\":\"Cabaña estilo americana con vista al lago\", \"price\": 1000, \"amenities\":\"cocina,baño,balcon,ducha\", \"urls_fotos\":\"[https://res.cloudinary.com/damlscz2d/image/upload/v1748197928/chirx7dc3jc962z7xzmm.jpg]\"}"
+                }
+            }
+        },
+        {
+            "name": "Editar unidad",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/editarUnidad",
+                    "path": [
+                        "editarUnidad"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"rooms\":2, \"beds\":4, \"description\":\"Cabaña estilo americana con vista al lago\", \"price\": 1000, \"amenities\":[\"Cocina completa\",\"toilet en suite\",\"Balcon\", \"Ducha escocesa\"], \"urls_fotos\":[\"https://cf.bstatic.com/xdata/images/hotel/max1024x768/414428911.jpg?k=dd5c62092ece84129e41a11c4b572672a3bb5f4570d37102d3449d1505a151bf&o=&hp=1\"],\"id\": 10}"
+                }
+            }
+        },
+        {
+            "name": "Eliminar unidad",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/eliminarUnidad",
+                    "path": [
+                        "eliminarUnidad"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\"id\": 18}"
+                }
+            }
+        },
+        {
+            "name": "consulta unidades get",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:5001/api/terceros/units?id=5",
+                    "query": [
+                        {
+                            "key": "id",
+                            "value": "5"
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "api",
+                        "terceros",
+                        "units"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "disabled": true
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc",
+                        "disabled": true
+                    }
+                ]
+            }
+        },
+        {
+            "name": "consulta unidades post",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/api/terceros/units",
+                    "path": [
+                        "api",
+                        "terceros",
+                        "units"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  // \"rooms\": 2,\n  // \"beds\": 4,\n  \"check_in_date\": \"2025-1-1\",\n  \"check_out_date\": \"2025-10-1\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Solicitar informes",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:5001/informes",
+                    "path": [
+                        "informes"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "motor get",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:5001/motor",
+                    "path": [
+                        "motor"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Eliminar admin",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:5001/deleteAdmin/1",
+                    "path": [
+                        "deleteAdmin",
+                        "1"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "disabled": true
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "editar contraseña",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/editPass",
+                    "path": [
+                        "editPass"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"password\": \"1234\"\n}"
+                }
+            }
+        },
+        {
+            "name": "recuperar contraseña get",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:5001/recoveryPass?username=guillermo.fullstack@gmail.com",
+                    "query": [
+                        {
+                            "key": "username",
+                            "value": "guillermo.fullstack@gmail.com"
+                        }
+                    ],
+                    "variable": [],
+                    "path": [
+                        "recoveryPass"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                }
+            }
+        },
+        {
+            "name": "recuperar contraseña post",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:5001/recoveryPass",
+                    "path": [
+                        "recoveryPass"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001"
+                },
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"token\":\"Imd1aWxsZXJtby5mdWxsc3RhY2tAZ21haWwuY29tIg.aEc6Jw.Ek0KOBTRXPAOP2OS9nebT1zan6w\",\n  \"password\":\"1234\"\n}"
+                }
+            }
+        }
+    ]
+}

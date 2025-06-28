@@ -1,0 +1,362 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "Pruebas de api/BDD",
+    "collectionId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+    "dateExported": "2025-06-10T14:14:40.923Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "20ae39d6-196e-46a0-bf83-976a50e10588",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Login",
+            "url": "http://localhost:5001/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2025-05-24T23:51:12.268Z",
+            "modified": "2025-06-08T20:07:53.771Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"guillermo.fullstack@gmail.com\",\n  \"password\": \"1234\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "6893c33a-2fba-462b-a89e-c7807bcbce94",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Register new admin",
+            "url": "http://localhost:5001/crearAdmin",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2025-05-24T23:48:19.319Z",
+            "modified": "2025-06-09T20:29:03.220Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"carol.ceron801@gmail.com\",\n  \"password\": \"1234\",\n  \"superUser\": \"True\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "bb6594f0-acbe-4734-83f9-51e546f698f7",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Generar reserva",
+            "url": "http://localhost:5001/api/terceros/almacenaReserva",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2025-05-25T11:32:24.764Z",
+            "modified": "2025-06-10T14:13:03.965Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTU2NDE2NSwianRpIjoiZDBkZjkyN2QtNjgwYy00ZWE0LTkwNjItY2NlNjljZWI5NjllIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcImlkXCI6IDI5LCBcInByaWNlXCI6IDEzMzMwOTc4fSIsIm5iZiI6MTc0OTU2NDE2NSwiY3NyZiI6ImNjMzRiODI2LTE2NTktNGY5Ny05ZjM1LWY3ZDU2Njc3ZWQ3ZSIsImV4cCI6MTc0OTU4MjE2NX0.zeMBdQCxm57arbF-_B_-0CScSFh880R2ZvH_sbllaNE"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\"unit_id\" : 29, \"check_in_date\": \"2025-2-24\", \"check_out_date\": \"2025-3-1\", \"amount_paid\": 250, \"guest\":{\"name\":\"Guillermo\", \"mail\":\"guillermo.fulstack@gmail.com\", \"phone\":\"12345678\"}\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "4469ec8e-6674-4846-9bbf-c095a0093111",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Ver Admins",
+            "url": "http://localhost:5001/verAdmins",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2025-05-25T11:44:33.001Z",
+            "modified": "2025-05-25T12:04:54.684Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                }
+            ]
+        },
+        {
+            "_id": "46936dd3-f177-4877-93bd-11601cb4d579",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Crear unidad",
+            "url": "http://localhost:5001/creaUnidad",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2025-05-25T12:05:35.931Z",
+            "modified": "2025-05-25T18:50:10.673Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\"rooms\":2, \"beds\":4, \"description\":\"Cabaña estilo americana con vista al lago\", \"price\": 1000, \"amenities\":\"cocina,baño,balcon,ducha\", \"urls_fotos\":\"[https://res.cloudinary.com/damlscz2d/image/upload/v1748197928/chirx7dc3jc962z7xzmm.jpg]\"}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e772d98e-84ca-4a71-8271-335f6abd06fd",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Editar unidad",
+            "url": "http://localhost:5001/editarUnidad",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2025-05-25T12:34:52.219Z",
+            "modified": "2025-05-25T19:59:28.596Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\"rooms\":2, \"beds\":4, \"description\":\"Cabaña estilo americana con vista al lago\", \"price\": 1000, \"amenities\":[\"Cocina completa\",\"toilet en suite\",\"Balcon\", \"Ducha escocesa\"], \"urls_fotos\":[\"https://cf.bstatic.com/xdata/images/hotel/max1024x768/414428911.jpg?k=dd5c62092ece84129e41a11c4b572672a3bb5f4570d37102d3449d1505a151bf&o=&hp=1\"],\"id\": 10}",
+                "form": []
+            }
+        },
+        {
+            "_id": "5c53e484-0b04-4148-924b-ce84249c9f61",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Eliminar unidad",
+            "url": "http://localhost:5001/eliminarUnidad",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2025-05-25T12:45:10.597Z",
+            "modified": "2025-05-25T19:59:52.461Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\"id\": 18}",
+                "form": []
+            }
+        },
+        {
+            "_id": "14bbc0d2-ad82-412f-a8b8-b2dd01e6371a",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "consulta unidades get",
+            "url": "http://localhost:5001/api/terceros/units?id=5",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2025-05-25T12:47:24.925Z",
+            "modified": "2025-05-25T20:40:38.359Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "5",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "5b2d909c-7c31-4633-bae6-6d61da491d39",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "consulta unidades post",
+            "url": "http://localhost:5001/api/terceros/units",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2025-05-25T12:48:42.703Z",
+            "modified": "2025-05-27T20:22:56.646Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODEzMTA3MywianRpIjoiNmZjZDI1NGUtMjcwZS00YTVkLThjZDktNGM5NzJlNjBkOTlhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiYWRtaW4zXCJ9IiwibmJmIjoxNzQ4MTMxMDczLCJjc3JmIjoiYzgyY2NiYjUtYTBkYy00YzFhLWI2ZTMtZmU3NzcxYjgwMzE4IiwiZXhwIjoxNzQ4MjE3NDczfQ.rJfexgFNc0cdmes1tMw5CFiwq2j_1fQaYHz-7h2noYc"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  // \"rooms\": 2,\n  // \"beds\": 4,\n  \"check_in_date\": \"2025-1-1\",\n  \"check_out_date\": \"2025-10-1\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "55e9dd46-d1a0-4847-8981-e80774bf7a05",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Solicitar informes",
+            "url": "http://localhost:5001/informes",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2025-05-25T16:43:58.309Z",
+            "modified": "2025-05-28T22:04:01.644Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                }
+            ]
+        },
+        {
+            "_id": "aaed2084-baa6-4771-95d1-386a6a9655bd",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "motor get",
+            "url": "http://localhost:5001/motor",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2025-06-05T19:46:57.972Z",
+            "modified": "2025-06-05T19:47:54.667Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                }
+            ]
+        },
+        {
+            "_id": "42ad1310-9ead-45f5-9b8c-957b8b74e95c",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "Eliminar admin",
+            "url": "http://localhost:5001/deleteAdmin/1",
+            "method": "DELETE",
+            "sortNum": 130000,
+            "created": "2025-06-06T19:50:08.828Z",
+            "modified": "2025-06-06T19:52:53.925Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "isDisabled": true
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                }
+            ]
+        },
+        {
+            "_id": "1788894c-6471-4dc3-a38b-d451c3dda6bd",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "editar contraseña",
+            "url": "http://localhost:5001/editPass",
+            "method": "POST",
+            "sortNum": 140000,
+            "created": "2025-06-08T15:46:09.277Z",
+            "modified": "2025-06-08T20:08:31.942Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODQ2OTgwMSwianRpIjoiMGJhODgzZmMtNDM5Ny00OTNiLTkyZmItZmM0NGRiMGUwNGI4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IntcInN1cGVyVXNlclwiOiAxLCBcInVzZXJuYW1lXCI6IFwiZ3VpbGxlcm1vLmZ1bGxzdGFja0BnbWFpbC5jb21cIn0iLCJuYmYiOjE3NDg0Njk4MDEsImNzcmYiOiIxOGYwY2M2OC0wOTQwLTQwMDUtYjRmYy1kMGVhM2UxNjhiMjQiLCJleHAiOjE3NTcxMDk4MDF9.nnCKkY4O4_SYhFSIWoFfPA4oUjNjd5TDHsJM6DF73E0"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"password\": \"1234\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "4b1e604e-b584-435d-b40e-17165394e9f8",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "recuperar contraseña get",
+            "url": "http://localhost:5001/recoveryPass?username=guillermo.fullstack@gmail.com",
+            "method": "GET",
+            "sortNum": 150000,
+            "created": "2025-05-31T20:25:10.557Z",
+            "modified": "2025-06-08T18:47:09.117Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "username",
+                    "value": "guillermo.fullstack@gmail.com",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "e7c4f473-f4ca-498f-aa60-ac12f7677e01",
+            "colId": "ad89ea21-6d5e-416d-8f63-e7dc90024416",
+            "containerId": "",
+            "name": "recuperar contraseña post",
+            "url": "http://localhost:5001/recoveryPass",
+            "method": "POST",
+            "sortNum": 160000,
+            "created": "2025-06-08T19:15:32.950Z",
+            "modified": "2025-06-09T19:47:49.301Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"token\":\"Imd1aWxsZXJtby5mdWxsc3RhY2tAZ21haWwuY29tIg.aEc6Jw.Ek0KOBTRXPAOP2OS9nebT1zan6w\",\n  \"password\":\"1234\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "XdqyDVZGazT3JmFtBBlLt4YKG9moPvnToKK6iGof2yZFRrq8hSw1JjIEIL_pVgsjaTBRi6C0E6yCSpjEXopEDw"
+}

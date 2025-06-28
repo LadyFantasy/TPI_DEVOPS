@@ -1,0 +1,51 @@
+.button1 {
+    all: unset;
+    box-sizing: border-box;
+    font-family: var(--font-base);
+    font-size: 1.8rem;
+    text-align: center;
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: .5rem;
+    padding: 1.2rem 3.5rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin-top: 2rem;
+}
+
+.button1:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.button1:active {
+    background-color: var(--color-primary);
+    transform: scale(0.98);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.24);
+}
+
+.button1.danger {
+    background-color: white;
+    color: var(--color-danger);
+    border: 2px solid var(--color-danger);
+    padding: calc(1.2rem - 2px) calc(3.5rem - 2px);
+}
+
+.button1.danger:hover {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.button1.confirm {
+    background-color: white;
+    color: var(--color-success);
+    border: 2px solid var(--color-success);
+    padding: calc(1.2rem - 2px) calc(3.5rem - 2px);
+}
+
+.button1.confirm:hover {
+    background-color: var(--color-success);
+    color: white;
+}

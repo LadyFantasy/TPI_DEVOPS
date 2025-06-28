@@ -1,0 +1,284 @@
+name: CI/CD Pipeline - PPIV
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test-backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_DATABASE: ppiv_db
+          MYSQL_USER: ppiv_user
+          MYSQL_PASSWORD: ppiv_password
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          cd ProyectoPPVI
+          pip install -r requirements.txt
+          pip install pytest pytest-cov pytest-mock
+
+      - name: Run backend tests
+        run: |
+          cd ProyectoPPVI
+          python -m pytest tests/ -v --cov=app --cov-report=xml --cov-report=html
+        env:
+          DB_HOST: localhost
+          DB_PORT: 3306
+          DB_NAME: ppiv_db
+          DB_USER: ppiv_user
+          DB_PASSWORD: ppiv_password
+          SECRET_KEY: test-secret-key
+          JWT_SECRET_KEY: test-jwt-secret-key
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./ProyectoPPVI/coverage.xml
+          flags: backend
+          name: backend-coverage
+
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: PI-PPIV-Front/package-lock.json
+
+      - name: Install frontend dependencies
+        run: |
+          cd PI-PPIV-Front
+          npm ci
+
+      - name: Run frontend tests
+        run: |
+          cd PI-PPIV-Front
+          npm run test:ci
+        env:
+          CI: true
+
+      - name: Upload frontend coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./PI-PPIV-Front/coverage/lcov.info
+          flags: frontend
+          name: frontend-coverage
+
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: PI-PPIV-Front/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd ProyectoPPVI
+          pip install flake8 black
+          cd ../PI-PPIV-Front
+          npm ci
+
+      - name: Lint Python code
+        run: |
+          cd ProyectoPPVI
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          black --check .
+
+      - name: Lint JavaScript code
+        run: |
+          cd PI-PPIV-Front
+          npm run lint
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend, lint]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./ProyectoPPVI
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:${{ steps.meta.outputs.version }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./PI-PPIV-Front
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:${{ steps.meta.outputs.version }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "ghcr.io/${{ github.repository }}-backend:latest"
+          format: "sarif"
+          output: "trivy-results.sarif"
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: "trivy-results.sarif"
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [build, security-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to staging environment
+        run: |
+          echo "🚀 Deploying to staging environment..."
+          # Aquí irían los comandos para desplegar en staging
+          # Por ejemplo: Heroku, Vercel, Render, etc.
+          echo "✅ Staging deployment completed successfully"
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, security-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying to production environment..."
+          # Aquí irían los comandos para desplegar en producción
+          # Por ejemplo: AWS EC2, Google Cloud, Azure, etc.
+          echo "✅ Production deployment completed successfully"
+
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend, build, deploy-production]
+    if: always()
+
+    steps:
+      - name: Notify on success
+        if: needs.test-backend.result == 'success' && needs.test-frontend.result == 'success' && needs.build.result == 'success' && needs.deploy-production.result == 'success'
+        run: |
+          echo "✅ All jobs completed successfully!"
+          # Aquí podrías agregar notificaciones a Slack, Discord, etc.
+          # curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ PPIV deployment successful!"}' ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notify on failure
+        if: needs.test-backend.result == 'failure' || needs.test-frontend.result == 'failure' || needs.build.result == 'failure' || needs.deploy-production.result == 'failure'
+        run: |
+          echo "❌ One or more jobs failed!"
+          # Aquí podrías agregar notificaciones de error
+          # curl -X POST -H 'Content-type: application/json' --data '{"text":"❌ PPIV deployment failed!"}' ${{ secrets.SLACK_WEBHOOK }}

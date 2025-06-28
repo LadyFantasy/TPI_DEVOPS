@@ -1,0 +1,10 @@
+[
+{"id":6,"username":"guillermo.fullstack@gmail.com","password":"scrypt:32768:8:1$Jz9TRRg38XiU2RbY$2488383c45cac01f144e3b36f08fcf2ddb0b5d24ed07ab9a5c3d9885380ba5680a6aa3636c816acb020f2560807e6f14de313fe74409ca11be5e916264b50a15","superUser":1},
+{"id":8,"username":"germangp62@gmail.com","password":"scrypt:32768:8:1$5OkJCffKGdO9GZbt$23e09681112c5677d0d936e1aca5c85b3fe4b2d9a6b803be6041c599a0df44d57592b4aa77baf685249748cad59ecf51fd4aebddf14cd04950cb8ce4503ca4e0","superUser":1},
+{"id":9,"username":"germangp622@gmail.com","password":"scrypt:32768:8:1$KZVFNvvqG8l7TqTG$04a8528d9a744a72ae4a9055e08a88855da4ccfc137db822b8fe8450a7a738c8a9adc3a4193e95cb29b3d9a76cc042ea004bce5625c68237436f7368a3224358","superUser":0},
+{"id":12,"username":"msoledadm88@gmail.com","password":"scrypt:32768:8:1$IZ8V0I2Mnam8F8Bh$b591ac481405d260288a7fa3f316a928748cb4627a0a12eb90eefd349f3fb7d076d0f201d14cedc5c2a24f98e8869da6d147585303376c4eca2d5ed2c43157f6","superUser":1},
+{"id":14,"username":"carol.ceron801@gmail.com","password":"scrypt:32768:8:1$YxjmebwdoNTwOqGV$facdd0bb0150cbcfc74dfc5724206a12a059b3cc77e71208caa4100675af75438005067e8837b316bb749c0e3f3e3e717f4734e4afad3d9014dd7787d4bc6a35","superUser":1},
+{"id":36,"username":"otrouser@mail.com","password":"scrypt:32768:8:1$0vV17ZsM4OaHfPc7$f12b50ead5210bdc23a9bea2a6fcf2cbe4f298bdfe8a118301d6aa439a5bcb200f3472753e7969e8059792711705d5f2f146afb53921c26e49510dd4f41016ac","superUser":0},
+{"id":40,"username":"admin2@mail.com","password":"scrypt:32768:8:1$eS1gga6jrmAD0fPM$5363184209ada0fe7e3edbe13f426a3a3e0c222b7fa568b1d25fe04025292e82c9611f18889e12e1e5d79fd2bf4b9de8eb2663c10a8266f852aa31b0b7801d96","superUser":0},
+{"id":41,"username":"admin@mail.com","password":"scrypt:32768:8:1$zXE8xy77Da7htVS1$8be0bb86f26c9031e55114c035869113e92aeb85c018a859c0c94307a6ede0c8398a4ba396be340030cfdd366c4e5fde886f6b85cfd2c6245b96a822e239016e","superUser":1}
+]

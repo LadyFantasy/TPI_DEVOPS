@@ -1,0 +1,132 @@
+.admin-form {
+  padding: 2rem;
+  padding-top: calc(4rem + 2rem);
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: calc(100vh - 6rem);
+  position: relative;
+}
+
+.admin-form__title {
+  font-size: 3rem;
+  color: var(--color-primary);
+  /*  margin-bottom: 2rem; */
+  text-align: center;
+}
+
+.admin-form__form {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.admin-form__field {
+  margin-bottom: 1.5rem;
+}
+
+.admin-form__field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.6rem;
+  color: var(--color-primary);
+}
+
+.admin-form__field input[type="text"],
+.admin-form__field input[type="password"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.6rem;
+  color: var(--color-primary);
+}
+
+.admin-form__field input[type="text"]:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.admin-form__field input[type="text"]::placeholder,
+.admin-form__field input[type="password"]::placeholder {
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.admin-form__field.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-form__field.checkbox label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.admin-form__field.checkbox input[type="checkbox"] {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+}
+
+.admin-form__field.checkbox span {
+  color: var(--color-primary);
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.admin-form__error {
+  color: #dc3545;
+  background-color: #f8d7da;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.back-button:hover {
+  transform: translateX(-5px);
+}
+
+.back-icon {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.admin-form-container {
+  width: 50vw;
+  min-width: 320px;
+  max-width: 600px;
+  margin: 10rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .admin-form-container {
+    width: 90vw;
+    margin: 8rem auto 0 auto;
+  }
+}

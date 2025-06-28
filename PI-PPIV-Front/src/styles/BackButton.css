@@ -1,0 +1,25 @@
+.back-button {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 7rem 1rem 0rem;
+  padding: 0;
+}
+
+.back-icon {
+  transition: transform 0.3s ease;
+  color: var(--color-primary);
+}
+
+.back-button:hover {
+  background: transparent;
+}
+
+.back-button:hover .back-icon {
+  transform: translateX(-5px) scale(1.1);
+  background: transparent;
+}

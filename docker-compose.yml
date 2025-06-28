@@ -1,0 +1,91 @@
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: ppiv_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-ppiv_db}
+      MYSQL_USER: ${DB_USER:-ppiv_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-ppiv_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ppiv_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Backend Flask
+  backend:
+    build:
+      context: ./ProyectoPPVI
+      dockerfile: Dockerfile
+    container_name: ppiv_backend
+    restart: unless-stopped
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-ppiv_db}
+      - DB_USER=${DB_USER:-ppiv_user}
+      - DB_PASSWORD=${DB_PASSWORD:-ppiv_password}
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-here}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-your-jwt-secret-key-here}
+      - MAIL_SERVER=${MAIL_SERVER:-smtp.gmail.com}
+      - MAIL_USERNAME=${MAIL_USERNAME:-your-email@gmail.com}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-your-app-password}
+      - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER:-your-email@gmail.com}
+      - URL_FRONT=http://localhost:3000
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ppiv_network
+    volumes:
+      - ./ProyectoPPVI/logs:/app/logs
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./PI-PPIV-Front
+      dockerfile: Dockerfile
+    container_name: ppiv_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - ppiv_network
+
+  # Nginx reverse proxy (opcional, para producción)
+  nginx:
+    image: nginx:alpine
+    container_name: ppiv_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - ppiv_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  ppiv_network:
+    driver: bridge

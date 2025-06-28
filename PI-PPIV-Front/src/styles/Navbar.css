@@ -1,0 +1,108 @@
+.navbar__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 4rem;
+  background-color: var(--color-primary);
+  color: var(--color-primary);
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+
+  padding: 3rem;
+}
+
+.navbar-title__title {
+  color: #fff;
+  font-weight: 600;
+}
+
+.navbar-title__logo {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-right: 2rem;
+}
+
+.navbar-title__wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-icons__wrapper {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.navbar__home,
+.navbar__logout,
+.navbar__key {
+  font-size: 3.5rem;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.navbar__home:hover,
+.navbar__logout:hover,
+.navbar__key:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .navbar__wrapper {
+    padding: 2rem;
+    font-size: 1.3rem;
+
+  }
+
+  .navbar-title__logo {
+    font-size: 2.2rem;
+    margin-right: 1rem;
+  }
+
+  .navbar-icons__wrapper {
+    gap: 1.5rem;
+  }
+
+  .navbar__home,
+  .navbar__logout,
+  .navbar__key {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar__wrapper {
+    padding: 0.7rem 0.5rem;
+    font-size: 1rem;
+    height: 3rem;
+  }
+
+  .navbar-title__logo {
+    font-size: 1.7rem;
+    margin-right: 0.5rem;
+  }
+
+  .navbar-title__title {
+    font-size: 1.1rem;
+  }
+
+  .navbar-icons__wrapper {
+    gap: 0.7rem;
+  }
+
+  .navbar__home,
+  .navbar__logout,
+  .navbar__key {
+    font-size: 2.2rem;
+  }
+}

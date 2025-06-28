@@ -1,0 +1,86 @@
+version: "3.8"
+
+services:
+  # Base de datos MySQL (igual que producción)
+  mysql:
+    image: mysql:8.0
+    container_name: ppiv_mysql_dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-ppiv_db}
+      MYSQL_USER: ${DB_USER:-ppiv_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-ppiv_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ppiv_network_dev
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Backend Flask (desarrollo con hot reload)
+  backend:
+    build:
+      context: ./ProyectoPPVI
+      dockerfile: Dockerfile.dev
+    container_name: ppiv_backend_dev
+    restart: unless-stopped
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME:-ppiv_db}
+      - DB_USER=${DB_USER:-ppiv_user}
+      - DB_PASSWORD=${DB_PASSWORD:-ppiv_password}
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-dev-jwt-secret-key}
+      - MAIL_SERVER=${MAIL_SERVER:-smtp.gmail.com}
+      - MAIL_USERNAME=${MAIL_USERNAME:-dev@gmail.com}
+      - MAIL_PASSWORD=${MAIL_PASSWORD:-dev-password}
+      - MAIL_DEFAULT_SENDER=${MAIL_DEFAULT_SENDER:-dev@gmail.com}
+      - URL_FRONT=http://localhost:3000
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ppiv_network_dev
+    volumes:
+      - ./ProyectoPPVI:/app
+      - ./ProyectoPPVI/logs:/app/logs
+    command: ["flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
+
+  # Frontend React (desarrollo con hot reload)
+  frontend:
+    build:
+      context: ./PI-PPIV-Front
+      dockerfile: Dockerfile.dev
+    container_name: ppiv_frontend_dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ppiv_network_dev
+    volumes:
+      - ./PI-PPIV-Front:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+volumes:
+  mysql_data_dev:
+    driver: local
+
+networks:
+  ppiv_network_dev:
+    driver: bridge

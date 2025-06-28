@@ -1,0 +1,34 @@
+.admin-panel__card {
+  background-color: var(--color-secondary);
+  border-radius: 1rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem 10rem;
+  margin: 2rem;
+  color: white;
+  text-align: center;
+
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.admin-panel__card:hover {
+  background-color: var(--color-primary);
+  transform: scale(.98);
+}
+
+.admin-panel__card:active {
+  outline: none;
+}
+
+.admin-panel__card--disabled,
+.admincard--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.admin-panel__card--disabled:hover,
+.admincard--disabled:hover {
+  transform: none;
+  background-color: var(--color-secondary);
+}

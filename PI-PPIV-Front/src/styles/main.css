@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+
+/***** RESET BÁSICO *****/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-base, sans-serif);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/***** VARIABLES CSS *****/
+:root {
+
+  /* Colores base */
+  --color-primary: #39818E;
+  --color-secondary: #A3C3C8;
+  --color-secondary-light: #a3c3c82c;
+  --color-danger: #d32f2f;
+  --color-success: #388e3c;
+  /* IR AGREGANDO MÁS VARIABLES DE COLOR SI LAS NECESITAMOS */
+
+
+  /* Tipografía */
+  --font-base: 'Nunito', system-ui, sans-serif;
+
+}
+
+.loading {
+  font-size: 1.8rem;
+  color: var(--color-secondary);
+  margin: 4rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.error-message {
+  font-size: 1.5m;
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ff4444;
+  color: white;
+  padding: 2rem 3rem;
+  border-radius: 4px;
+  z-index: 1000;
+  max-width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* --- App Layout --- */
+.app-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  /* Contenido principal crece, footer toma altura automática */
+  min-height: 100vh;
+}
+
+.main-content {
+  /* Se elimina flex: 1 */
+}
