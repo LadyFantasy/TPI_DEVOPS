@@ -3,12 +3,15 @@ import json
 import os
 from unittest.mock import patch, MagicMock
 from app import app
+from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 @pytest.fixture
 def client():
     """Fixture para crear un cliente de prueba"""
     app.config['TESTING'] = True
     app.config['WTF_CSRF_ENABLED'] = False
+    app.config['JWT_SECRET_KEY'] = 'test-secret-key'  # Agregar clave JWT para tests
     
     with app.test_client() as client:
         yield client
@@ -16,10 +19,15 @@ def client():
 @pytest.fixture
 def auth_headers():
     """Headers de autenticación para tests"""
-    return {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer test-token'
-    }
+    with app.app_context():
+        # Crear un token JWT válido para tests
+        user_identity = {"superUser": True, "username": "admin"}
+        token = create_access_token(identity=json.dumps(user_identity), expires_delta=timedelta(hours=1))
+        
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {token}'
+        }
 
 class TestAppRoutes:
     """Tests para las rutas principales de la aplicación"""
@@ -29,7 +37,8 @@ class TestAppRoutes:
         response = client.get('/')
         assert response.status_code == 200
         data = json.loads(response.data)
-        assert 'routes' in data or 'info' in data
+        # La respuesta contiene rutas con el formato "route ('/ruta')"
+        assert 'route (' in str(data) or 'routes' in data or 'info' in data
     
     def test_login_success(self, client):
         """Test de login exitoso"""
@@ -75,11 +84,9 @@ class TestAppRoutes:
         response = client.get('/verAdmins')
         assert response.status_code == 401
     
-    @patch('app.get_jwt_identity')
     @patch('app.DB')
-    def test_ver_admins_success(self, mock_db, mock_jwt, client, auth_headers):
+    def test_ver_admins_success(self, mock_db, client, auth_headers):
         """Test de ver administradores exitoso"""
-        mock_jwt.return_value = '{"superUser": true, "username": "admin"}'
         mock_db.auxVerAdmins.return_value = [
             (1, 'admin1', 'hash1', True),
             (2, 'admin2', 'hash2', False)
@@ -91,22 +98,27 @@ class TestAppRoutes:
         assert 'admin1' in data
         assert 'admin2' in data
     
-    @patch('app.get_jwt_identity')
-    def test_ver_admins_unauthorized(self, mock_jwt, client, auth_headers):
+    def test_ver_admins_unauthorized(self, client):
         """Test de ver administradores sin permisos"""
-        mock_jwt.return_value = '{"superUser": false, "username": "user"}'
-        
-        response = client.get('/verAdmins', headers=auth_headers)
-        assert response.status_code == 403
+        with app.app_context():
+            # Crear un token con superUser = False
+            user_identity = {"superUser": False, "username": "user"}
+            token = create_access_token(identity=json.dumps(user_identity), expires_delta=timedelta(hours=1))
+            
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {token}'
+            }
+            
+            response = client.get('/verAdmins', headers=headers)
+            assert response.status_code == 403
 
 class TestUnitOperations:
     """Tests para operaciones de unidades"""
     
-    @patch('app.get_jwt_identity')
     @patch('app.Unit')
-    def test_create_unit_success(self, mock_unit, mock_jwt, client, auth_headers):
+    def test_create_unit_success(self, mock_unit, client, auth_headers):
         """Test de creación de unidad exitosa"""
-        mock_jwt.return_value = '{"superUser": true, "username": "admin"}'
         mock_instance = MagicMock()
         mock_instance.save.return_value = ({"message": "Unidad creada con éxito"}, 201)
         mock_unit.return_value = mock_instance
@@ -130,11 +142,9 @@ class TestUnitOperations:
         data = json.loads(response.data)
         assert 'message' in data
     
-    @patch('app.get_jwt_identity')
     @patch('app.DB')
-    def test_delete_unit_success(self, mock_db, mock_jwt, client, auth_headers):
+    def test_delete_unit_success(self, mock_db, client, auth_headers):
         """Test de eliminación de unidad exitosa"""
-        mock_jwt.return_value = '{"superUser": true, "username": "admin"}'
         mock_db.deleteUnit.return_value = ({'message': 'Unidad eliminada con éxito'}, 200)
         
         response = client.post('/eliminarUnidad', 
