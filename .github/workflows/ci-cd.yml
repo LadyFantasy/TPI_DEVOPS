@@ -10,7 +10,8 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/${{ github.event.repository.name }}
 
-# Force new execution - Updated Docker image naming fix
+# Force new execution - Docker image naming fix applied
+# This ensures the workflow uses personal username instead of organization
 jobs:
   test-backend:
     name: Test Backend
