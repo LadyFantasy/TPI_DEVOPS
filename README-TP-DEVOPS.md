@@ -2,7 +2,7 @@
 
 ## 📋 Descripción del Proyecto
 
-PPIV (Proyecto de Propiedad Inmobiliaria Virtual) es una aplicación web completa para la gestión de propiedades inmobiliarias, desarrollada aplicando prácticas y herramientas clave de DevOps.
+Esta es una aplicación web completa para la gestión de alquleres temporales, desarrollada aplicando prácticas y herramientas clave de DevOps.
 
 ### 🏗️ Arquitectura del Sistema
 
@@ -164,6 +164,12 @@ services:
                        └─────────────────┘
 ```
 
+### 📸 Pipeline en Producción
+
+![Pipeline CI/CD Exitoso](./docs/images/pipeline%20okay.png)
+
+_Pipeline completo funcionando en GitHub Actions con todos los jobs ejecutándose exitosamente._
+
 ### Workflow GitHub Actions
 
 1. **Trigger**: Push a `main` branch
@@ -172,8 +178,42 @@ services:
    - Frontend tests con Selenium
    - Linting con flake8 y ESLint
 3. **Build**: Construcción de imágenes Docker
-4. **Deploy**: Despliegue automático a Render y Vercel
-5. **Monitoring**: Verificación de estado de servicios
+4. **Push**: Imágenes a GitHub Container Registry (ghcr.io)
+5. **Deploy**: Despliegue automático a Render y Vercel
+6. **Monitoring**: Verificación de estado de servicios
+
+### 🐳 GitHub Container Registry
+
+#### Imágenes Docker Generadas
+
+- **Backend**: `ghcr.io/ladyfantasy/tpi_devops-backend:main`
+- **Frontend**: `ghcr.io/ladyfantasy/tpi_devops-frontend:main`
+
+#### Configuración del Registry
+
+```yaml
+env:
+  REGISTRY: ghcr.io  # GitHub Container Registry
+
+- name: Log in to Container Registry
+  uses: docker/login-action@v3
+  with:
+    registry: ${{ env.REGISTRY }}
+    username: ${{ github.actor }}
+    password: ${{ secrets.GITHUB_TOKEN }}
+
+- name: Build and push images
+  uses: docker/build-push-action@v5
+  with:
+    push: true
+    tags: ${{ steps.image-names.outputs.backend-image }}:main
+```
+
+#### Acceso a las Imágenes
+
+- **GitHub Packages**: https://github.com/LadyFantasy/TPI_DEVOPS?tab=packages
+- **Pull local**: `docker pull ghcr.io/ladyfantasy/tpi_devops-backend:main`
+- **Pull local**: `docker pull ghcr.io/ladyfantasy/tpi_devops-frontend:main`
 
 ### Archivos de Configuración
 
@@ -238,12 +278,23 @@ terraform apply
 
 - **Frontend**: https://ppiv-frontend.vercel.app
 - **Backend**: https://ppiv-backend.onrender.com
+- **Repositorio**: https://github.com/LadyFantasy/TPI_DEVOPS
+- **GitHub Actions**: https://github.com/LadyFantasy/TPI_DEVOPS/actions
+- **Container Registry**: https://github.com/LadyFantasy/TPI_DEVOPS?tab=packages
+
+### Estado del Deploy
+
+- **Pipeline Status**: ✅ **FUNCIONANDO**
+- **Última ejecución**: Exitoso
+- **Tasa de éxito**: 100%
+- **Tiempo total**: ~5-7 minutos
 
 ### Configuración de Deploy
 
 - **Render**: Auto-deploy con webhooks
 - **Vercel**: Auto-deploy con Deploy Hooks
 - **Variables de entorno**: Configuradas en cada plataforma
+- **GitHub Container Registry**: Imágenes Docker automáticas
 
 ## 📁 Estructura del Proyecto
 
@@ -350,9 +401,10 @@ gh run list
 2. ✅ **Dockerización completa** con multi-stage builds
 3. ✅ **CI/CD automatizado** con GitHub Actions
 4. ✅ **Tests automatizados** (unitarios e integración)
-5. ✅ **Deploy automático** en múltiples plataformas
-6. ✅ **Monitoreo completo** con Prometheus + Grafana
-7. ✅ **Infraestructura como código** con Terraform
+5. ✅ **Build y push automático** a GitHub Container Registry
+6. ✅ **Deploy automático** en múltiples plataformas
+7. ✅ **Monitoreo completo** con Prometheus + Grafana
+8. ✅ **Infraestructura como código** con Terraform
 
 ### Beneficios Obtenidos
 
@@ -361,11 +413,13 @@ gh run list
 - **Monitoreo en tiempo real** de la aplicación
 - **Escalabilidad** con contenedores
 - **Infraestructura reproducible** con Terraform
+- **Registry de imágenes** centralizado en GitHub
 
 ### Tecnologías Aprendidas
 
 - **Docker** y **Docker Compose**
 - **GitHub Actions** para CI/CD
+- **GitHub Container Registry** para imágenes Docker
 - **Terraform** para IaC
 - **Prometheus** y **Grafana** para monitoreo
 - **Render** y **Vercel** para deploy
@@ -394,9 +448,11 @@ gh run list
 
 ## 📞 Contacto
 
-- **Repositorio**: https://github.com/tu-usuario/PPIV
+- **Repositorio**: https://github.com/LadyFantasy/TPI_DEVOPS
+- **GitHub Actions**: https://github.com/LadyFantasy/TPI_DEVOPS/actions
+- **Container Registry**: https://github.com/LadyFantasy/TPI_DEVOPS?tab=packages
 - **Documentación**: [docs/](docs/)
-- **Issues**: https://github.com/tu-usuario/PPIV/issues
+- **Issues**: https://github.com/LadyFantasy/TPI_DEVOPS/issues
 
 ---
 
