@@ -44,7 +44,24 @@ db = MySQL()
 db.init_app(app) # Inicialización de SQL
 DB = ControllerDB(db)
 jtw =  JWTManager(app)
-CORS(app, origins=[os.getenv("URL_FRONT")+"/*","*"])
+
+# Configuración de CORS para desarrollo y producción
+if os.getenv('IS_PRODUCTION') == 'true':
+    # En producción, permitir solo el dominio de Vercel
+    CORS(app, origins=[
+        "https://tpi-devops.vercel.app",
+        "https://tpi-devops-frontend.vercel.app",
+        "https://*.vercel.app"  # Para cualquier subdominio de Vercel
+    ])
+else:
+    # En desarrollo, permitir localhost
+    CORS(app, origins=[
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173"
+    ])
+
 CORS(app, resources={r"/api/terceros/*": {"origins": ["*"]}})
 
 @app.route("/")
