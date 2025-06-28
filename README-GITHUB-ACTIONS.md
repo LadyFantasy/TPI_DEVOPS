@@ -99,7 +99,7 @@ graph LR
 
 ### 📸 Ejecución del Pipeline
 
-<!-- Agregar aquí una captura de pantalla de la ejecución en tiempo real -->
+docs\images\pipeline okay.png
 
 ![Pipeline Execution](./docs/images/pipeline-execution.png)
 

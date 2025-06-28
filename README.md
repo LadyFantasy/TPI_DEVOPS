@@ -115,6 +115,18 @@ graph LR
 | Build Docker  | ~4-6 min        | < 6 min  |
 | Deploy        | ~2-4 min        | < 4 min  |
 
+### 🎉 Pipeline en Producción
+
+![Pipeline CI/CD Exitoso](./docs/images/pipeline%20okay.png)
+
+_Pipeline completo funcionando en GitHub Actions con todos los jobs ejecutándose exitosamente._
+
+**Estado Actual**: ✅ **FUNCIONANDO**
+
+- **Última ejecución**: Exitoso
+- **Tasa de éxito**: 100%
+- **Tiempo total**: ~5-7 minutos
+
 ---
 
 ## 📦 Instalación y Configuración
@@ -633,24 +645,6 @@ docker-compose exec backend env
 ## 📞 Soporte
 
 - **🐛 Issues**: [GitHub Issues](https://github.com/LadyFantasy/TPI_DEVOPS/issues)
-- **📧 Email**: [Tu email de contacto]
-- **📖 Wiki**: [Documentación del proyecto]
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
----
-
-## 🎉 Agradecimientos
-
-- **React Team**: Por el framework frontend
-- **Flask Team**: Por el framework backend
-- **Docker Team**: Por la containerización
-- **GitHub Actions**: Por la automatización
-- **Render & Vercel**: Por el hosting
 
 ---
 

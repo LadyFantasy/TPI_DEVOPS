@@ -152,3 +152,35 @@ Antes de subir las imágenes:
 ---
 
 **¡Con estas imágenes, tu README será mucho más visual y fácil de entender! 📸**
+
+# 📸 Imágenes del Proyecto PPIV
+
+Esta carpeta contiene todas las imágenes y capturas de pantalla utilizadas en la documentación del proyecto.
+
+## 📋 Contenido
+
+### 🚀 Pipeline CI/CD
+
+- **`pipeline okay.png`** - Captura del pipeline de GitHub Actions funcionando exitosamente con todos los jobs en verde
+
+### 📊 Diagramas y Documentación
+
+- Diagramas de arquitectura
+- Capturas de interfaces
+- Gráficos de métricas
+
+## 📝 Cómo Agregar Imágenes
+
+1. **Formato recomendado**: PNG o JPG
+2. **Tamaño**: Optimizar para web (máximo 1MB)
+3. **Nomenclatura**: Usar nombres descriptivos en minúsculas con guiones
+4. **Referencia**: Actualizar este README cuando se agreguen nuevas imágenes
+
+## 🔗 Referencias en Documentación
+
+- **README.md**: `./docs/images/pipeline%20okay.png`
+- **pipeline-diagram.md**: `./images/pipeline%20okay.png`
+
+---
+
+_Última actualización: $(date)_
