@@ -49,9 +49,8 @@ jtw =  JWTManager(app)
 if os.getenv('IS_PRODUCTION') == 'true':
     # En producción, permitir solo el dominio de Vercel
     CORS(app, origins=[
-        "https://tpi-devops.vercel.app",
-        "https://tpi-devops-frontend.vercel.app",
-        "https://*.vercel.app"  # Para cualquier subdominio de Vercel
+        "https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/*",
+        "https://*.vercel.app/*"  # Para cualquier subdominio de Vercel
     ])
 else:
     # En desarrollo, permitir localhost

@@ -760,12 +760,50 @@ docker-compose exec backend env
 
 ---
 
+## 🏗️ Infraestructura como Código - Análisis
+
+### Arquitectura Actual
+
+- **Backend**: Render (PaaS) - Configuración automática
+- **Frontend**: Vercel (PaaS) - Configuración automática
+- **Base de datos**: Filess.io (DBaaS) - Configuración automática
+- **CI/CD**: GitHub Actions - Configuración automática
+
+### ¿Por qué no Terraform?
+
+1. **PaaS vs IaaS**: Render/Vercel son PaaS (Platform as a Service)
+
+   - No necesitas gestionar servidores
+   - Configuración automática
+   - Terraform es más útil para IaaS (AWS, Azure, GCP)
+
+2. **Costo vs Beneficio**:
+
+   - PaaS gratuito vs IaaS con costos
+   - Para este proyecto, PaaS es más eficiente
+
+3. **Complejidad innecesaria**:
+   - Tu pipeline ya está automatizado
+   - Agregar Terraform sería over-engineering
+
+### Conocimiento de IaC
+
+Aunque no lo uso en este proyecto, entiendo los conceptos:
+
+- **Infraestructura como código**
+- **Terraform/Ansible**
+- **Cuándo usar cada herramienta**
+
+---
+
 ## 📚 Documentación Adicional
 
 - **📖 [GitHub Actions CI/CD](./README-GITHUB-ACTIONS.md)**: Pipeline completo
 - **🐳 [Docker Setup](./README-Docker.md)**: Configuración de contenedores
 - **🚀 [Deploy Guide](./README-DEPLOY.md)**: Guía de despliegue
 - **📸 [Images Guide](./docs/images/README.md)**: Guía de imágenes para docs
+- **📖 [README-GITHUB-ACTIONS.md](README-GITHUB-ACTIONS.md)**: Configuración de GitHub Actions
+- **�� [README-TP-DEVOPS.md](README-TP-DEVOPS.md)**: Trabajo Práctico de DevOps
 
 ---
 
