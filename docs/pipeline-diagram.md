@@ -199,27 +199,7 @@ graph TD
 
 ## Configuración de Webhooks
 
-```mermaid
-graph LR
-    A[GitHub Push] --> B[GitHub Actions]
-    B --> C{Webhooks Configured?}
-
-    C -->|Yes| D[Trigger Render Deploy]
-    C -->|Yes| E[Trigger Vercel Deploy]
-    C -->|No| F[Auto-Deploy]
-
-    D --> G[Backend Live]
-    E --> H[Frontend Live]
-    F --> I[Both Live]
-
-    G --> J[Health Check]
-    H --> J
-    I --> J
-
-    J --> K[Success Notification]
-```
-
-Para más detalles sobre la configuración de webhooks, consulta [README-DEPLOY.md](../README-DEPLOY.md).
+Para más detalles sobre la configuración de webhooks y deploy automático, consulta la sección de deploy en el README principal y README-GITHUB-ACTIONS.md.
 
 ## Pipeline Exitoso en Producción
 
