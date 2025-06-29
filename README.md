@@ -403,42 +403,11 @@ stateDiagram-v2
 - **Backend**: `ghcr.io/ladyfantasy/tpi_devops-backend:main`
 - **Frontend**: `ghcr.io/ladyfantasy/tpi_devops-frontend:main`
 
-#### Configuración del Registry
-
-```yaml
-env:
-  REGISTRY: ghcr.io  # GitHub Container Registry
-
-- name: Log in to Container Registry
-  uses: docker/login-action@v3
-  with:
-    registry: ${{ env.REGISTRY }}
-    username: ${{ github.actor }}
-    password: ${{ secrets.GITHUB_TOKEN }}
-
-- name: Build and push images
-  uses: docker/build-push-action@v5
-  with:
-    push: true
-    tags: ${{ steps.image-names.outputs.backend-image }}:main
-```
-
 #### Acceso a las Imágenes
 
 - **GitHub Packages**: https://github.com/LadyFantasy/TPI_DEVOPS?tab=packages
 - **Pull local**: `docker pull ghcr.io/ladyfantasy/tpi_devops-backend:main`
 - **Pull local**: `docker pull ghcr.io/ladyfantasy/tpi_devops-frontend:main`
-
-### 🔄 Deploy con Webhooks (Opcional)
-
-El workflow `deploy-webhooks.yml` permite disparar deploys manualmente usando webhooks:
-
-- **Se ejecuta**: En push a `main` o manualmente desde GitHub Actions
-- **Render**: Usa `RENDER_WEBHOOK_URL` (si configurado) o auto-deploy
-- **Vercel**: Usa `VERCEL_DEPLOY_HOOK_URL` (gratuito) o `VERCEL_WEBHOOK_URL` (pago)
-- **Uso**: Para forzar deploy cuando el auto-deploy falla
-
-**Configuración**: Agregar secrets en GitHub → Settings → Secrets and variables → Actions
 
 ---
 
