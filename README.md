@@ -5,22 +5,21 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 ## 📋 Índice
 
 - [🎯 Descripción del Sistema](#-descripción-del-sistema)
+- [🌐 Enlaces de Producción](#-enlaces-de-producción)
 - [🌍 Entornos de Ejecución](#-entornos-de-ejecución)
 - [🏗️ Arquitectura del Sistema](#️-arquitectura-del-sistema)
 - [🚀 Pipeline CI/CD Automatizado](#-pipeline-cicd-automatizado)
 - [📦 Instalación y Configuración](#-instalación-y-configuración)
-- [🧪 Sistema de Tests](#-sistema-de-tests)
-- [🏠 Funcionalidades del Sistema](#-funcionalidades-del-sistema)
-- [📁 Estructura del Proyecto](#-estructura-del-proyecto)
-- [🔄 Flujo de Deploy Automático](#-flujo-de-deploy-automático)
-- [🛠️ Comandos Útiles](#️-comandos-útiles)
+- [🌐 Producción (Deploy Automático)](#-producción-deploy-automático)
 - [📊 Monitoreo con Prometheus + Grafana](#-monitoreo-con-prometheus--grafana)
-- [🔧 Configuración Avanzada](#-configuración-avanzada)
 - [🚨 Troubleshooting](#-troubleshooting)
-- [🏗️ Infraestructura como Código con Terraform](#️-infraestructura-como-código)
-- [📚 Documentación Adicional](#-documentación-adicional)
+- [🏗️ Infraestructura como Código - Análisis](#️-infraestructura-como-código---análisis)
 - [🤝 Contribución](#-contribución)
+- [🏆 Conclusiones y Roles del Equipo](#-conclusiones-y-roles-del-equipo)
 - [📞 Soporte](#-soporte)
+- [🏆 Logros del Proyecto](#-logros-del-proyecto)
+- [🛠️ Comandos Útiles](#️-comandos-útiles)
+- [🗂️ Estrategia de ramas (Git Flow)](#️-estrategia-de-ramas-git-flow)
 
 ---
 
@@ -927,4 +926,4 @@ docker run -p 3000:3000 ppiv-frontend
 - `develop`: Rama de integración para nuevas funcionalidades.
 - `feature/*`: Ramas para el desarrollo de nuevas features o fixes.
 
-> En este proyecto, la estructura de ramas se implementó para cumplir con las mejores prácticas de DevOps, aunque el desarrollo principal se realizó en `main` por ser un trabajo individual y cerrado.
+> En este proyecto, la estructura de ramas se implementó para cumplir con las mejores prácticas de DevOps, aunque el desarrollo principal se realizó en `main`.
