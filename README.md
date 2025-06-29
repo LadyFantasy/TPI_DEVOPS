@@ -41,6 +41,12 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 - **Backend**: [https://tpi-devops-bzi6.onrender.com](https://tpi-devops-bzi6.onrender.com)
 - **Repositorio**: [https://github.com/LadyFantasy/TPI_DEVOPS](https://github.com/LadyFantasy/TPI_DEVOPS)
 
+### 🔑 Credenciales de Acceso
+
+**Usuario por defecto:** `admin@mail.com`  
+**Contraseña por defecto:** `123456`  
+Este usuario tiene acceso de **Super Usuario** con todos los permisos del sistema.
+
 ---
 
 ## 🌍 Entornos de Ejecución
