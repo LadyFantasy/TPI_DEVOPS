@@ -26,7 +26,7 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 
 ## 🎯 Descripción del Sistema
 
-**Omeguitas** es una plataforma 
+**Omeguitas** es una plataforma para administradores de alojamientos temporales que centraliza y facilita las siguientes funcionalidades:
 
 - **🏠 Gestión de Propiedades**: Administración completa de unidades de alojamiento
 - **📅 Sistema de Reservas**: Calendario interactivo y proceso de reserva simplificado
@@ -465,38 +465,27 @@ cp env.example .env
 #### 3. **Variables de Entorno (Desarrollo)**
 
 ```env
-# Base de Datos
+# Base de Datos Local
 DB_HOST=mysql
 DB_PORT=3306
 DB_NAME=ppiv_db
-DB_USER=ppiv_user
-DB_PASSWORD=ppiv_password
+DB_USER=root
+DB_PASSWORD=password
 
 # Flask
 SECRET_KEY=dev-secret-key
 JWT_SECRET_KEY=dev-jwt-secret
-
-# Email (opcional para desarrollo)
-MAIL_SERVER=smtp.gmail.com
-MAIL_USERNAME=tu-email@gmail.com
-MAIL_PASSWORD=tu-app-password
-MAIL_DEFAULT_SENDER=tu-email@gmail.com
-
-# Frontend URL
-URL_FRONT=http://localhost:3000
+IS_PRODUCTION=false
 ```
 
-#### 4. **Ejecutar con Docker**
+#### 4. **Iniciar Desarrollo**
 
 ```bash
-# Iniciar todo el stack
-docker-compose up -d
+# Iniciar todo el stack de desarrollo
+docker-compose -f docker-compose.dev.yml up -d
 
-# Ver logs
-docker-compose logs -f
-
-# Parar servicios
-docker-compose down
+# Verificar que todo esté funcionando
+docker-compose -f docker-compose.dev.yml ps
 ```
 
 #### 5. **Acceso a la Aplicación**
@@ -507,451 +496,13 @@ docker-compose down
 
 ### 🌐 Producción (Deploy Automático)
 
-#### 1. **Configuración en Render (Backend)**
-
-- **Build Command**: `pip install -r requirements.txt`
-- **Start Command**: `gunicorn --bind 0.0.0.0:10000 --workers 4 --timeout 120 app:app`
-- **Python Version**: 3.11
-
-#### 2. **Configuración en Vercel (Frontend)**
-
-- **Framework Preset**: Vite
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-
-#### 3. **Variables de Entorno (Producción)**
-
-```env
-# Backend (Render)
-IS_PRODUCTION=true
-DB_HOST=pk3b0.h.filess.io
-DB_PORT=3307
-DB_NAME=alojamientosomeguitas_particles
-DB_USER=alojamientosomeguitas_particles
-DB_PASSWORD=your-production-db-password
-SECRET_KEY=tu-secret-key-super-segura
-JWT_SECRET_KEY=tu-jwt-secret-super-segura
-URL_FRONT=https://tu-frontend.vercel.app
-
-# Frontend (Vercel)
-VITE_API_URL=https://tu-backend.onrender.com
-```
-
----
-
-## 🧪 Sistema de Tests
-
-### 🔧 Tests del Backend
-
-#### **Ejecutar Tests**
-
-```bash
-cd ProyectoPPVI
-python -m pytest tests/ -v --cov=app --cov-report=html
-```
-
-#### **Tests Incluidos**
-
-- ✅ **Autenticación**: Login, registro, JWT tokens
-- ✅ **Gestión de Unidades**: CRUD completo
-- ✅ **Reservas**: Creación, modificación, cancelación
-- ✅ **Usuarios**: Roles y permisos
-- ✅ **Reportes**: Generación de informes
-- ✅ **Emails**: Envío de notificaciones
-
-#### **Cobertura de Tests**
-
-- **Objetivo**: > 80%
-- **Actual**: ~85%
-- **Reporte**: `coverage.html` generado automáticamente
-
-### 🎨 Tests del Frontend
-
-#### **Ejecutar Tests**
-
-```bash
-cd PI-PPIV-Front
-npm ci
-npm run build
-```
-
-#### **Tests Incluidos**
-
-- ✅ **Build de Producción**: Validación de compilación
-- ✅ **Dependencias**: Verificación de package-lock.json
-- ✅ **Linting**: ESLint y formateo
-- ✅ **Componentes**: Validación de React
-
-### 🤖 Tests E2E (Selenium)
-
-#### **Ejecutar Tests E2E**
-
-```bash
-cd PI-PPIV-Front
-python -m pytest tests/ -v
-```
-
-#### **Tests E2E Incluidos**
-
-- ✅ **Login Exitoso**: `test_loginexitoso.py`
-- ✅ **Login Fallido**: `test_loginnoexitosopasserr.py`, `test_loginnoexitosousererr.py`
-- ✅ **Gestión de Unidades**: `test_agregarUnidadOk.py`, `test_agregarUnidadIncompleto.py`
-- ✅ **Reservas**: `test_consultarReservas.py`
-- ✅ **Edición**: `test_editarUnidad.py`, `test_eliminarUnidad.py`
-
----
-
-## 🏠 Funcionalidades del Sistema
-
-### 👤 Gestión de Usuarios
-
-- **Roles**: Admin, Propietario, Huésped
-- **Autenticación**: JWT tokens seguros
-- **Perfiles**: Información personal y preferencias
-- **Recuperación**: Sistema de recuperación de contraseñas
-
-### 🏘️ Gestión de Propiedades
-
-- **Unidades**: Creación y edición de alojamientos
-- **Fotos**: Carga múltiple con Cloudinary
-- **Amenities**: Lista de servicios disponibles
-- **Ubicación**: Geolocalización y direcciones
-- **Precios**: Configuración base y multiplicadores
-
-### 📅 Sistema de Reservas
-
-- **Calendario**: Vista interactiva de disponibilidad
-- **Reservas**: Proceso simplificado de booking
-- **Confirmaciones**: Emails automáticos
-- **Check-in**: Proceso de llegada digitalizado
-- **Cancelaciones**: Políticas flexibles
-
-### 💰 Gestión de Precios
-
-- **Precio Base**: Tarifa estándar por noche
-- **Multiplicadores**: Ajustes por temporada
-- **Temporadas**: Configuración de fechas especiales
-- **Descuentos**: Ofertas y promociones
-
-### 📊 Reportes y Analytics
-
-- **Ocupación**: Estadísticas de reservas
-- **Rentabilidad**: Análisis de ingresos
-- **Huéspedes**: Comportamiento y preferencias
-- **Propiedades**: Rendimiento por unidad
-
-### 📧 Sistema de Notificaciones
-
-- **Confirmaciones**: Emails de reserva
-- **Recordatorios**: Notificaciones de check-in
-- **Encuestas**: Feedback post-estadía
-- **Alertas**: Notificaciones importantes
-
----
-
-## 📁 Estructura del Proyecto
-
-```
-PPIV/
-├── 📁 ProyectoPPVI/                    # Backend Flask
-│   ├── 🐍 app.py                      # Aplicación principal
-│   ├── ⚙️ config.py                   # Configuración
-│   ├── 📦 requirements.txt             # Dependencias Python
-│   ├── 🐳 Dockerfile                  # Imagen Docker
-│   ├── 📁 clases/                     # Modelos de datos
-│   │   ├── admin.py                   # Gestión de admins
-│   │   ├── guest.py                   # Gestión de huéspedes
-│   │   ├── reservation.py             # Sistema de reservas
-│   │   ├── unit.py                    # Gestión de unidades
-│   │   ├── reports.py                 # Generación de reportes
-│   │   └── sendMail.py                # Sistema de emails
-│   ├── 📁 templates/                  # Templates de email
-│   │   └── 📁 mails/
-│   │       ├── checkin.html           # Email de check-in
-│   │       ├── informes.html          # Email de reportes
-│   │       └── recoveryPass.html      # Email de recuperación
-│   └── 📁 tests/                      # Tests del backend
-│       ├── test_app.py                # Tests de la aplicación
-│       └── test_integration.py        # Tests de integración
-├── 📁 PI-PPIV-Front/                  # Frontend React
-│   ├── ⚛️ src/                        # Código fuente
-│   │   ├── 📁 components/             # Componentes React
-│   │   ├── 📁 pages/                  # Páginas de la aplicación
-│   │   ├── 📁 context/                # Context API
-│   │   ├── 📁 utils/                  # Utilidades
-│   │   └── 📁 styles/                 # Estilos CSS
-│   ├── 📦 package.json                # Dependencias Node.js
-│   ├── 🐳 Dockerfile                  # Imagen Docker
-│   └── 📁 tests/                      # Tests E2E Selenium
-│       ├── test_loginexitoso.py       # Test de login
-│       ├── test_agregarUnidadOk.py    # Test de agregar unidad
-│       └── ...                        # Más tests
-├── 📁 .github/                        # Configuración GitHub
-│   └── 📁 workflows/
-│       └── ci-cd.yml                  # Pipeline CI/CD
-├── 📁 docs/                           # Documentación
-│   ├── 📁 images/                     # Imágenes para docs
-│   └── README.md                      # Guía de imágenes
-├── 📁 monitoring/                     # Monitoreo
-│   ├── 📁 grafana/                    # Dashboards
-│   └── 📁 prometheus/                 # Métricas
-├── 🐳 docker-compose.yml              # Stack local
-├── 🐳 docker-compose.dev.yml          # Desarrollo
-├── 🐳 docker-compose.monitoring.yml   # Monitoreo
-├── 📄 env.example                     # Variables de entorno
-├── 📄 init.sql                        # Inicialización DB
-└── 📄 README.md                       # Este archivo
-```
-
----
-
-## 🔄 Flujo de Deploy Automático
-
-### 1. **Push a GitHub**
-
-```bash
-git add .
-git commit -m "Nuevas funcionalidades"
-git push origin main
-```
-
-### 2. **GitHub Actions se Ejecuta**
-
-- ✅ Tests automáticos
-- ✅ Linting y validación
-- ✅ Build de imágenes Docker
-- ✅ Deploy automático
-
-### 3. **Deploy Completo**
+El proyecto se despliega automáticamente en:
 
 - **Backend**: Render (Flask API)
 - **Frontend**: Vercel (React App)
 - **Base de datos**: Filess.io (MySQL)
 
-### 4. **Verificación**
-
-- **URLs de producción** actualizadas automáticamente
-- **Tests de integración** ejecutados
-- **Notificaciones** enviadas
-
----
-
-## 🛠️ Comandos Útiles
-
-### 🔧 Desarrollo Local
-
-```bash
-# Iniciar todo el stack
-docker-compose up -d
-
-# Ver logs en tiempo real
-docker-compose logs -f
-
-# Parar servicios
-docker-compose down
-
-# Reconstruir imágenes
-docker-compose build --no-cache
-
-# Acceder a la base de datos
-docker-compose exec mysql mysql -u ppiv_user -p ppiv_db
-```
-
-### 🧪 Tests
-
-```bash
-# Tests del backend
-cd ProyectoPPVI
-python -m pytest tests/ -v --cov=app
-
-# Tests del frontend
-cd PI-PPIV-Front
-npm ci
-npm run build
-
-# Tests E2E
-cd PI-PPIV-Front
-python -m pytest tests/ -v
-```
-
-### 🐳 Docker
-
-```bash
-# Construir imágenes localmente
-docker build -t ppiv-backend ./ProyectoPPVI
-docker build -t ppiv-frontend ./PI-PPIV-Front
-
-# Ejecutar contenedores
-docker run -p 5000:5000 ppiv-backend
-docker run -p 3000:3000 ppiv-frontend
-```
-
-### 🐳 Docker Compose Detallado
-
-#### **Desarrollo Local**
-
-```bash
-# Desarrollo con hot reload
-docker-compose -f docker-compose.dev.yml up --build
-
-# Ver logs en tiempo real
-docker-compose -f docker-compose.dev.yml logs -f
-
-# Detener servicios de desarrollo
-docker-compose -f docker-compose.dev.yml down
-
-# Limpiar contenedores huérfanos
-docker-compose -f docker-compose.dev.yml down --remove-orphans
-```
-
-#### **Producción**
-
-```bash
-# Construir imágenes
-docker-compose build
-
-# Levantar servicios
-docker-compose up -d
-
-# Ver logs
-docker-compose logs -f
-
-# Detener servicios
-docker-compose down
-
-# Reiniciar servicios
-docker-compose restart
-```
-
-#### **Configuración de Desarrollo**
-
-El entorno de desarrollo incluye hot reload para ambos servicios:
-
-```yaml
-# Backend - Flask con hot reload
-command: ["flask", "run", "--host=0.0.0.0", "--port=5000", "--reload"]
-
-# Frontend - Vite con hot reload
-volumes:
-  - ./PI-PPIV-Front:/app
-  - /app/node_modules
-environment:
-  - CHOKIDAR_USEPOLLING=true
-  - WATCHPACK_POLLING=true
-```
-
-#### **Volúmenes de Desarrollo**
-
-```yaml
-# Backend
-volumes:
-  - ./ProyectoPPVI:/app
-  - ./ProyectoPPVI/logs:/app/logs
-
-# Frontend
-volumes:
-  - ./PI-PPIV-Front:/app
-  - /app/node_modules
-```
-
-#### **Health Checks**
-
-Todos los servicios incluyen health checks:
-
-```yaml
-healthcheck:
-  test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-  timeout: 20s
-  retries: 10
-```
-
-#### **Troubleshooting Docker**
-
-##### **1. Puerto ya en uso**
-
-```bash
-# Verificar puertos ocupados
-netstat -tulpn | grep :5000
-netstat -tulpn | grep :3000
-
-# Cambiar puertos en docker-compose.yml
-ports:
-  - "5001:5000"  # Puerto host:puerto contenedor
-```
-
-##### **2. Problemas de permisos**
-
-```bash
-# Cambiar permisos de volúmenes
-sudo chown -R $USER:$USER ./ProyectoPPVI/logs
-```
-
-##### **3. Problemas de red**
-
-```bash
-# Verificar redes Docker
-docker network ls
-docker network inspect ppiv_network
-
-# Recrear red
-docker network rm ppiv_network
-docker-compose up -d
-```
-
-##### **4. Comandos de Debug**
-
-```bash
-# Ver logs de un servicio específico
-docker-compose logs backend
-docker-compose logs frontend
-docker-compose logs mysql
-
-# Entrar a un contenedor
-docker-compose exec backend bash
-docker-compose exec frontend sh
-docker-compose exec mysql mysql -u root -p
-
-# Verificar estado de servicios
-docker-compose ps
-docker-compose top
-```
-
-#### **Optimizaciones de Producción**
-
-- **Multi-stage builds** para reducir tamaño de imágenes
-- **Health checks** para todos los servicios
-- **Networks** aisladas para seguridad
-- **Volúmenes** persistentes para datos
-
-#### **Variables de Entorno de Producción**
-
-```env
-# Producción
-IS_PRODUCTION=true
-DB_HOST=pk3b0.h.filess.io
-DB_PORT=3307
-DB_NAME=alojamientosomeguitas_particles
-DB_USER=alojamientosomeguitas_particles
-DB_PASSWORD=your-production-password
-```
-
-#### **Buenas Prácticas de Seguridad**
-
-- **Variables de entorno** para configuraciones sensibles
-- **Networks aisladas** para comunicación entre servicios
-- **Health checks** para monitoreo de servicios
-- **Volúmenes nombrados** para persistencia de datos
-
-```yaml
-# Usar variables de entorno
-environment:
-  - SECRET_KEY=${SECRET_KEY}
-  - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-
-# Networks aisladas
-networks:
-  - ppiv_network
-```
+**No requiere configuración manual** - el pipeline CI/CD maneja todo automáticamente.
 
 ---
 
@@ -1561,3 +1112,53 @@ Aunque no lo uso en este proyecto, entiendo los conceptos:
 - **Prometheus** y **Grafana** para monitoreo
 - **Render** y **Vercel** para deploy
 - **Selenium** para testing de UI
+
+## 🛠️ Comandos Útiles
+
+### 🔧 Desarrollo Local
+
+```bash
+# Iniciar todo el stack de desarrollo
+docker-compose -f docker-compose.dev.yml up -d
+
+# Ver logs en tiempo real
+docker-compose -f docker-compose.dev.yml logs -f
+
+# Parar servicios
+docker-compose -f docker-compose.dev.yml down
+
+# Reconstruir imágenes
+docker-compose -f docker-compose.dev.yml build --no-cache
+
+# Acceder a la base de datos
+docker-compose -f docker-compose.dev.yml exec mysql mysql -u root -p ppiv_db
+```
+
+### 🧪 Tests
+
+```bash
+# Tests del backend
+cd ProyectoPPVI
+python -m pytest tests/ -v --cov=app
+
+# Tests del frontend
+cd PI-PPIV-Front
+npm ci
+npm run build
+
+# Tests E2E
+cd PI-PPIV-Front
+python -m pytest tests/ -v
+```
+
+### 🐳 Docker
+
+```bash
+# Construir imágenes localmente
+docker build -t ppiv-backend ./ProyectoPPVI
+docker build -t ppiv-frontend ./PI-PPIV-Front
+
+# Ejecutar contenedores individuales
+docker run -p 5000:5000 ppiv-backend
+docker run -p 3000:3000 ppiv-frontend
+```
