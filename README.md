@@ -740,6 +740,90 @@ Actualmente, toda la infraestructura se gestiona como PaaS (Render, Vercel, File
 
 ---
 
+## 🏆 Conclusiones y Roles del Equipo
+
+### 👥 Roles y Responsabilidades
+
+Este proyecto fue desarrollado por un equipo de 4 personas, cada una con responsabilidades específicas que permitieron crear una aplicación completa y robusta:
+
+#### **Soledad Martínez** - Project Manager & Frontend
+
+- **Rol**: Liderazgo del proyecto y desarrollo frontend
+- **Responsabilidades**:
+  - Gestión del proyecto y planificación de sprints
+  - Desarrollo de la interfaz con React y Vite
+  - Coordinación entre frontend, backend y DevOps
+  - Documentación y presentación del proyecto
+  - Configuración de CI/CD y monitoreo
+
+#### **Guillermo Köster** - Backend & Base de Datos
+
+- **Rol**: Desarrollo del backend y gestión de datos
+- **Responsabilidades**:
+  - Desarrollo de la API REST con Flask
+  - Diseño y optimización de la base de datos MySQL
+  - Implementación de autenticación JWT
+  - Configuración de servicios de email
+  - Dockerización del backend
+
+#### **Carolina Cerón** - UI/UX & Diseño
+
+- **Rol**: Diseño de interfaz y experiencia de usuario
+- **Responsabilidades**:
+  - Diseño de componentes y estilos CSS
+  - Optimización de la experiencia de usuario
+  - Responsive design y accesibilidad
+  - Creación de wireframes y prototipos
+  - Aseguramiento de la usabilidad del sistema
+
+#### **Germán Pappalardo** - Testing & Calidad
+
+- **Rol**: Aseguramiento de calidad y testing
+- **Responsabilidades**:
+  - Implementación de tests unitarios con pytest
+  - Tests de integración y E2E con Selenium
+  - Configuración de coverage y métricas de calidad
+  - Validación de funcionalidades críticas
+  - Aseguramiento de la estabilidad del sistema
+
+### 🎯 Logros del Equipo
+
+#### **Trabajo Colaborativo**
+
+- **Comunicación efectiva** entre todos los roles
+- **Integración exitosa** de frontend, backend y DevOps
+- **Cumplimiento de deadlines** y objetivos del proyecto
+- **Aplicación de mejores prácticas** de desarrollo
+
+#### **Resultados Técnicos**
+
+- **Aplicación funcional** con todas las características solicitadas
+- **Pipeline CI/CD completo** y automatizado
+- **Monitoreo implementado** con Prometheus y Grafana
+- **Documentación exhaustiva** y clara
+- **Cobertura de tests** superior al 85%
+
+#### **Aprendizajes Adquiridos**
+
+- **DevOps en la práctica**: CI/CD, Docker, monitoreo
+- **Trabajo en equipo** con roles definidos
+- **Gestión de proyectos** con metodologías ágiles
+- **Integración de tecnologías** modernas
+- **Despliegue en la nube** con servicios PaaS
+
+### 🚀 Impacto del Proyecto
+
+Este trabajo práctico demostró la capacidad del equipo para:
+
+- **Desarrollar aplicaciones completas** desde cero hasta producción
+- **Implementar prácticas DevOps** modernas y efectivas
+- **Trabajar colaborativamente** con roles bien definidos
+- **Entregar productos de calidad** con documentación completa
+
+El proyecto no solo cumple con todos los requisitos técnicos solicitados, sino que también demuestra las habilidades de trabajo en equipo y la capacidad de aplicar conocimientos teóricos en un proyecto real y funcional.
+
+---
+
 ## 📞 Soporte
 
 - **🐛 Issues**: [GitHub Issues](https://github.com/LadyFantasy/TPI_DEVOPS/issues)
