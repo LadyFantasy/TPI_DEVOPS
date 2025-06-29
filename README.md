@@ -35,6 +35,12 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 - **📊 Reportes**: Informes detallados de ocupación y rentabilidad
 - **📧 Notificaciones**: Sistema de emails automáticos para check-in
 
+## 🌐 Enlaces de Producción
+
+- **Frontend**: [https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/](https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/)
+- **Backend**: [https://tpi-devops-bzi6.onrender.com](https://tpi-devops-bzi6.onrender.com)
+- **Repositorio**: [https://github.com/LadyFantasy/TPI_DEVOPS](https://github.com/LadyFantasy/TPI_DEVOPS)
+
 ---
 
 ## 🌍 Entornos de Ejecución

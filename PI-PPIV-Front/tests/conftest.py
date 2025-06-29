@@ -51,7 +51,7 @@ def driver():
 @pytest.fixture
 def base_url():
     """URL base para los tests"""
-    return os.getenv('FRONTEND_URL', 'https://proyecto-ppiv-front.vercel.app')
+    return os.getenv('FRONTEND_URL', 'https://tpi-devops-git-main-ladyfantasys-projects.vercel.app')
 
 @pytest.fixture
 def test_credentials():

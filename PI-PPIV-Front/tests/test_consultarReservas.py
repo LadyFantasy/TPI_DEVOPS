@@ -17,7 +17,7 @@ class TestConsultarReservas():
     self.driver.quit()
   
   def test_consultarReservas(self):
-    self.driver.get("https://proyecto-ppiv-front.vercel.app/login")
+    self.driver.get("https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/login")
     self.driver.set_window_size(1181, 797)
     self.driver.find_element(By.CSS_SELECTOR, ".login-input-top").click()
     self.driver.find_element(By.CSS_SELECTOR, ".login-input-top").send_keys("germangp62@gmail.com")

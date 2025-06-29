@@ -24,7 +24,7 @@ class TestAgregarUnidadIncompleto(unittest.TestCase):
         self.driver.quit()
 
     def test_agregarUnidadIncompleto(self):
-        self.driver.get("https://proyecto-ppiv-front.vercel.app/login")
+        self.driver.get("https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/login")
         self.driver.set_window_size(1181, 797)
         
         # Login

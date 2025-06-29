@@ -151,7 +151,7 @@ jobs:
           echo "✅ Selenium tests completed"
         env:
           CI: true
-          FRONTEND_URL: https://proyecto-ppiv-front.vercel.app
+          FRONTEND_URL: https://tpi-devops-git-main-ladyfantasys-projects.vercel.app
           DISPLAY: :99
           CHROME_HEADLESS: true
 
