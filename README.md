@@ -17,7 +17,7 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 - [📊 Monitoreo con Prometheus + Grafana](#-monitoreo-con-prometheus--grafana)
 - [🔧 Configuración Avanzada](#-configuración-avanzada)
 - [🚨 Troubleshooting](#-troubleshooting)
-- [🏗️ Infraestructura como Código](#️-infraestructura-como-código)
+- [🏗️ Infraestructura como Código con Terraform](#️-infraestructura-como-código)
 - [📚 Documentación Adicional](#-documentación-adicional)
 - [🤝 Contribución](#-contribución)
 - [📞 Soporte](#-soporte)
@@ -41,23 +41,31 @@ Sistema completo de gestión y reservas para alojamientos temporales con fronten
 
 ### 🔧 Desarrollo Local (Docker)
 
-- **Base de datos**: MySQL local en contenedor (`ppiv_db`)
-- **Usuario DB**: `root`
-- **Configuración**: `IS_PRODUCTION=false`
-- **Archivo**: `docker-compose.dev.yml`
-- **Uso**: Desarrollo y testing local
+- **Frontend y Backend**: Se levantan como contenedores Docker usando `docker-compose.dev.yml`.
+- **Base de datos**: Se levanta automáticamente en un contenedor MySQL llamado `ppiv_mysql_dev`.
+  - El esquema y los datos iniciales se cargan desde el archivo `init.sql` al iniciar el contenedor.
+- **Comando para levantar todo**:
+  ```bash
+  docker-compose -f docker-compose.dev.yml up -d
+  ```
+- **Acceso**:
+  - Frontend: http://localhost:3000
+  - Backend: http://localhost:5000
+  - MySQL: localhost:3306 (usuario y contraseña definidos en `.env` o variables por defecto)
 
 ### 🚀 Producción (Render + Vercel)
 
-- **Base de datos**: MySQL en Filess.io (`alojamientosomeguitas_particles`)
-- **Usuario DB**: `alojamientosomeguitas_particles`
-- **Configuración**: `IS_PRODUCTION=true`
-- **Deploy**: Automático via GitHub Actions
-- **Uso**: Aplicación en producción
+- **Backend**: Deploy automático en Render.com (PaaS) usando GitHub Actions.
+- **Frontend**: Deploy automático en Vercel.com (PaaS) usando GitHub Actions.
+- **Base de datos**: Servicio gestionado en Filess.io, accesible desde ambos entornos.
+- **Deploys**:
+  - Se disparan automáticamente al hacer push a la rama `main` en GitHub.
+  - GitHub Actions ejecuta tests y, si todo pasa, hace deploy usando los webhooks de Render y Vercel (URLs configuradas como secrets en GitHub).
+- **Health checks**: Ambos servicios tienen health checks automáticos tras el deploy.
 
 ### ⚙️ Configuración Automática
 
-El sistema detecta automáticamente el entorno:
+El sistema detecta automáticamente el entorno y configura la base de datos según corresponda:
 
 ```python
 # En config.py
@@ -491,64 +499,24 @@ docker-compose -f docker-compose.monitoring.yml up -d
 
 - **Grafana**: http://localhost:3001 (admin/admin)
 - **Prometheus**: http://localhost:9090
-- **Alertmanager**: http://localhost:9093
-- **Node Exporter**: http://localhost:9100
-- **cAdvisor**: http://localhost:8080
-- **MySQL Exporter**: http://localhost:9104
 
 ### 📈 ¿Qué Muestran los Dashboards?
 
 #### **Grafana Dashboard Principal**
 
-1. **📊 Métricas del Sistema**
-
-   - CPU Usage: Uso de procesador en tiempo real
-   - Memory Usage: Consumo de memoria RAM
-   - Disk Usage: Espacio en disco utilizado
-   - Network Traffic: Tráfico de red
-
-2. **🐳 Métricas de Contenedores**
-
-   - Container CPU: Uso de CPU por contenedor
-   - Container Memory: Memoria por contenedor
-   - Container Status: Estado de cada contenedor
-   - Container Restarts: Reinicios de contenedores
-
-3. **🌐 Métricas de Aplicación**
+1. **🌐 Métricas de Aplicación**
 
    - HTTP Request Rate: Tasa de requests por segundo
    - Response Time: Tiempo de respuesta promedio
    - Error Rate: Porcentaje de errores HTTP
    - Active Connections: Conexiones activas
 
-4. **🗄️ Métricas de Base de Datos**
-   - MySQL Connections: Conexiones activas a MySQL
-   - Query Performance: Rendimiento de consultas
-   - Database Size: Tamaño de la base de datos
-   - Slow Queries: Consultas lentas
+2. **📊 Métricas del Sistema**
 
-### 🔔 Sistema de Alertas
-
-#### **Alertas Configuradas**
-
-1. **🚨 Alertas de Sistema**
-
-   - CPU > 80% por más de 5 minutos
-   - Memory > 85% por más de 5 minutos
-   - Disk > 90% de uso
-   - Container restart > 3 veces en 10 minutos
-
-2. **🌐 Alertas de Aplicación**
-
-   - Error rate > 5% en 5 minutos
-   - Response time > 2 segundos promedio
-   - Service down por más de 1 minuto
-   - Database connection failures
-
-3. **📧 Notificaciones**
-   - Email automático al administrador
-   - Slack webhook (configurable)
-   - Dashboard visual con alertas activas
+   - CPU Usage: Uso de procesador en tiempo real
+   - Memory Usage: Consumo de memoria RAM
+   - Disk Usage: Espacio en disco utilizado
+   - Network Traffic: Tráfico de red
 
 ### 🛠️ Cómo Usar Grafana
 
@@ -561,17 +529,10 @@ docker-compose -f docker-compose.monitoring.yml up -d
 #### **2. Navegar por los Paneles**
 
 - **Panel Superior**: Métricas generales del sistema
-- **Panel Izquierdo**: Métricas de contenedores
-- **Panel Derecho**: Métricas de aplicación
-- **Panel Inferior**: Métricas de base de datos
+- **Panel Izquierdo**: Métricas de aplicación
+- **Panel Derecho**: Métricas de rendimiento
 
-#### **3. Configurar Alertas**
-
-1. Ir a "Alerting" → "Alert Rules"
-2. Crear nueva regla de alerta
-3. Configurar condiciones y notificaciones
-
-#### **4. Personalizar Dashboards**
+#### **3. Personalizar Dashboards**
 
 1. Hacer clic en "Edit" en cualquier panel
 2. Modificar queries de Prometheus
@@ -585,37 +546,21 @@ docker-compose -f docker-compose.monitoring.yml up -d
 ```yaml
 # prometheus.yml
 scrape_configs:
-  - job_name: "backend"
+  - job_name: "prometheus"
     static_configs:
-      - targets: ["backend:5000"]
+      - targets: ["localhost:9090"]
 
-  - job_name: "frontend"
+  - job_name: "ppiv-backend"
     static_configs:
-      - targets: ["frontend:3000"]
+      - targets: ["ppiv_backend_dev:5000"]
+    metrics_path: "/metrics"
+    scrape_interval: 10s
 
-  - job_name: "mysql"
+  - job_name: "ppiv-frontend"
     static_configs:
-      - targets: ["mysql-exporter:9104"]
-
-  - job_name: "node"
-    static_configs:
-      - targets: ["node-exporter:9100"]
-```
-
-#### **Reglas de Alertas**
-
-```yaml
-# alert_rules.yml
-groups:
-  - name: ppiv_alerts
-    rules:
-      - alert: HighCPUUsage
-        expr: cpu_usage > 80
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "CPU usage is high"
+      - targets: ["ppiv_frontend_dev:3000"]
+    metrics_path: "/metrics"
+    scrape_interval: 10s
 ```
 
 ### 📊 Métricas Específicas del Proyecto
@@ -633,247 +578,6 @@ groups:
 - Errores de JavaScript
 - Métricas de rendimiento
 - Estado de build
-
-#### **Base de Datos MySQL**
-
-- Conexiones activas
-- Consultas por segundo
-- Tiempo de respuesta de queries
-- Bloqueos y deadlocks
-
----
-
-## 🚨 Troubleshooting Avanzado
-
-### ❌ Problemas del Pipeline CI/CD
-
-#### **1. Tests Fallan**
-
-```bash
-# Verificar que la app esté corriendo
-curl http://localhost:5000/health
-
-# Revisar logs
-docker-compose logs backend
-
-# Ejecutar tests individualmente
-python -m pytest tests/test_login.py -v
-
-# Verificar variables de entorno en CI
-echo $DB_HOST
-echo $SECRET_KEY
-```
-
-#### **2. Docker Build Falla**
-
-```bash
-# Verificar nombres de imagen
-echo "Repository name must be lowercase"
-
-# Solución: Usar nombres en minúsculas
-ghcr.io/ladyfantasy/tpi_devops-backend:main
-
-# Limpiar cache de Docker
-docker system prune -a
-
-# Reconstruir sin cache
-docker-compose build --no-cache
-```
-
-#### **3. Deploy Falla**
-
-```bash
-# Verificar variables de entorno
-echo $DB_HOST
-echo $SECRET_KEY
-
-# Revisar logs de GitHub Actions
-# Ir a: GitHub > Actions > Ver logs
-
-# Verificar conectividad
-curl https://tu-backend.onrender.com/health
-
-# Verificar secrets de GitHub
-# GitHub > Settings > Secrets and variables > Actions
-```
-
-#### **4. Selenium Tests Fallan**
-
-```bash
-# Verificar que Chrome esté instalado
-google-chrome --version
-
-# Ejecutar tests con más verbosidad
-python -m pytest tests/test_login_improved.py -v -s
-
-# Verificar variables de entorno
-echo $FRONTEND_URL
-echo $CI
-```
-
-### 🔍 Debugging del Pipeline
-
-#### **Logs Útiles**
-
-```bash
-# Backend logs
-docker-compose logs backend
-
-# Frontend logs
-docker-compose logs frontend
-
-# Database logs
-docker-compose logs mysql
-
-# GitHub Actions logs
-# GitHub > Actions > Workflow > Job > View logs
-
-# Monitoreo logs
-docker-compose -f docker-compose.monitoring.yml logs -f
-```
-
-#### **Verificación de Estado**
-
-```bash
-# Verificar servicios
-docker-compose ps
-
-# Verificar puertos
-netstat -tulpn | grep :5000
-netstat -tulpn | grep :3000
-
-# Verificar variables de entorno
-docker-compose exec backend env
-
-# Verificar redes Docker
-docker network ls
-docker network inspect ppiv_network
-```
-
-#### **Comandos de Debug Local**
-
-```bash
-# Test local del backend
-cd ProyectoPPVI
-python -m pytest tests/ -v
-
-# Test local del frontend
-cd PI-PPIV-Front
-npm ci
-npm run build
-
-# Test de Docker local
-docker build -t test-backend ./ProyectoPPVI
-docker build -t test-frontend ./PI-PPIV-Front
-
-# Test de Selenium local
-cd PI-PPIV-Front
-python -m pytest tests/test_login_improved.py -v
-```
-
-### 📈 Métricas de Rendimiento del Pipeline
-
-#### **Tiempos Promedio por Job**
-
-| Job               | Tiempo Promedio | Objetivo | Estado |
-| ----------------- | --------------- | -------- | ------ |
-| test-backend      | ~3-5 min        | < 5 min  | ✅ OK  |
-| test-frontend     | ~2-3 min        | < 3 min  | ✅ OK  |
-| test-frontend-e2e | ~2-4 min        | < 4 min  | ✅ OK  |
-| lint              | ~1-2 min        | < 2 min  | ✅ OK  |
-| build             | ~4-6 min        | < 6 min  | ✅ OK  |
-| deploy-backend    | ~2-4 min        | < 4 min  | ✅ OK  |
-| deploy-frontend   | ~1-2 min        | < 2 min  | ✅ OK  |
-
-#### **Cobertura de Tests**
-
-| Componente | Cobertura Actual | Objetivo | Estado |
-| ---------- | ---------------- | -------- | ------ |
-| Backend    | ~85%             | > 80%    | ✅ OK  |
-| Frontend   | Build validation | Build OK | ✅ OK  |
-
-#### **Tasa de Éxito del Pipeline**
-
-- **Última ejecución**: Exitoso
-- **Tasa de éxito**: 100%
-- **Tiempo total**: ~5-7 minutos
-- **Jobs paralelos**: 4 (test-backend, test-frontend, test-frontend-e2e, lint)
-- **Jobs secuenciales**: 3 (build, deploy-backend, deploy-frontend)
-
-### 🔧 Configuración de Secrets
-
-#### **Secrets Requeridos**
-
-| Secret                   | Descripción                | Estado      |
-| ------------------------ | -------------------------- | ----------- |
-| `GITHUB_TOKEN`           | Token automático de GitHub | ✅ OK       |
-| `RENDER_DEPLOY_HOOK_URL` | Webhook de Render          | ⚠️ Opcional |
-| `VERCEL_DEPLOY_HOOK_URL` | Webhook de Vercel          | ⚠️ Opcional |
-
-#### **Configuración de Secrets**
-
-1. **GitHub**: Settings → Secrets and variables → Actions
-2. **Render**: Dashboard → Service → Settings → Build & Deploy → Build Hook
-3. **Vercel**: Dashboard → Project → Settings → Git → Deploy Hooks
-
-### 📊 Logs y Monitoreo
-
-#### **GitHub Actions Logs**
-
-- **Ubicación**: GitHub > Actions > Workflow > Job
-- **Retención**: 90 días
-- **Descarga**: Disponible en formato JSON
-
-#### **Render Logs**
-
-- **Ubicación**: Dashboard → Service → Logs
-- **Tipos**: Build logs, Runtime logs
-- **Retención**: 30 días
-
-#### **Vercel Logs**
-
-- **Ubicación**: Dashboard → Project → Functions
-- **Tipos**: Function logs, Build logs
-- **Retención**: 30 días
-
-### 🎯 Optimizaciones Implementadas
-
-#### **Cache de Dependencias**
-
-- **Python**: Cache de pip con hash de requirements.txt
-- **Node.js**: Cache de npm con package-lock.json
-- **Docker**: Cache de GitHub Actions para builds
-
-#### **Paralelización**
-
-- **Jobs paralelos**: test-backend, test-frontend, test-frontend-e2e, lint
-- **Dependencias**: Solo build espera a todos los tests
-- **Deploy**: Backend y frontend se despliegan en paralelo
-
-#### **Optimizaciones de Docker**
-
-- **Multi-stage builds**: Reduce tamaño de imágenes
-- **Buildx cache**: Cache entre ejecuciones
-- **Nombres en minúsculas**: Evita problemas de permisos
-
----
-
-## 🔧 Configuración Avanzada
-
-### 🔒 Seguridad
-
-- **JWT Tokens**: Autenticación segura
-- **HTTPS**: Certificados SSL automáticos
-- **Rate Limiting**: Protección contra ataques
-- **Input Validation**: Sanitización de datos
-- **SQL Injection**: Protección con ORM
-
-### 📈 Escalabilidad
-
-- **Load Balancing**: Configuración en Render
-- **Caching**: Redis para sesiones
-- **CDN**: Vercel Edge Network
-- **Database**: Optimización de queries
 
 ---
 
@@ -986,6 +690,12 @@ docker-compose exec backend env
 
 ## 🏗️ Infraestructura como Código - Análisis
 
+### Archivos de Terraform
+
+En el repositorio se incluyen archivos de configuración de Terraform (`terraform/main.tf`, `terraform/variables.tf`, y módulos), pero **no están en uso actualmente** en el pipeline ni en producción. Estos archivos están preparados para mostrar cómo se podría aprovisionar infraestructura en la nube (por ejemplo, redes, instancias, bases de datos) si se migrara a un entorno IaaS como AWS, Azure o GCP.
+
+Actualmente, toda la infraestructura se gestiona como PaaS (Render, Vercel, Filess.io), por lo que no es necesario aplicar Terraform, pero los archivos quedan como referencia y ejemplo de buenas prácticas de Infraestructura como Código.
+
 ### Arquitectura Actual
 
 - **Backend**: Render (PaaS) - Configuración automática
@@ -997,7 +707,7 @@ docker-compose exec backend env
 
 1. **PaaS vs IaaS**: Render/Vercel son PaaS (Platform as a Service)
 
-   - No necesitas gestionar servidores
+   - No es necesario gestionar servidores
    - Configuración automática
    - Terraform es más útil para IaaS (AWS, Azure, GCP)
 
@@ -1007,25 +717,8 @@ docker-compose exec backend env
    - Para este proyecto, PaaS es más eficiente
 
 3. **Complejidad innecesaria**:
-   - Tu pipeline ya está automatizado
+   - El pipeline ya está automatizado
    - Agregar Terraform sería over-engineering
-
-### Conocimiento de IaC
-
-Aunque no lo uso en este proyecto, entiendo los conceptos:
-
-- **Infraestructura como código**
-- **Terraform/Ansible**
-- **Cuándo usar cada herramienta**
-
----
-
-## 📚 Documentación Adicional
-
-- **📖 [GitHub Actions CI/CD](./README-GITHUB-ACTIONS.md)**: Pipeline completo
-- **🐳 [Docker Setup](./README-Docker.md)**: Configuración de contenedores
-- **🚀 [Deploy Guide](./README-DEPLOY.md)**: Guía de despliegue
-- **📸 [Images Guide](./docs/images/README.md)**: Guía de imágenes para docs
 
 ---
 
@@ -1063,13 +756,13 @@ Aunque no lo uso en este proyecto, entiendo los conceptos:
 4. **Tests automatizados** (unitarios e integración)
 5. **Build y push automático** a GitHub Container Registry
 6. **Deploy automático** en múltiples plataformas
-7. **Monitoreo completo** con Prometheus + Grafana
+7. **Monitoreo básico** con Prometheus + Grafana
 
 ### 🎯 Beneficios Obtenidos
 
 - **Automatización completa** del proceso de desarrollo
 - **Despliegue confiable** y reproducible
-- **Monitoreo en tiempo real** de la aplicación
+- **Monitoreo básico** de la aplicación
 - **Escalabilidad** con contenedores
 - **Registry de imágenes** centralizado en GitHub
 
@@ -1078,7 +771,7 @@ Aunque no lo uso en este proyecto, entiendo los conceptos:
 - **Docker** y **Docker Compose**
 - **GitHub Actions** para CI/CD
 - **GitHub Container Registry** para imágenes Docker
-- **Prometheus** y **Grafana** para monitoreo
+- **Prometheus** y **Grafana** para monitoreo básico
 - **Render** y **Vercel** para deploy
 - **Selenium** para testing de UI
 
@@ -1131,3 +824,11 @@ docker build -t ppiv-frontend ./PI-PPIV-Front
 docker run -p 5000:5000 ppiv-backend
 docker run -p 3000:3000 ppiv-frontend
 ```
+
+## 🗂️ Estrategia de ramas (Git Flow)
+
+- `main`: Rama principal, siempre estable y lista para producción.
+- `develop`: Rama de integración para nuevas funcionalidades.
+- `feature/*`: Ramas para el desarrollo de nuevas features o fixes.
+
+> En este proyecto, la estructura de ramas se implementó para cumplir con las mejores prácticas de DevOps, aunque el desarrollo principal se realizó en `main` por ser un trabajo individual y cerrado.
