@@ -620,8 +620,7 @@ echo $SECRET_KEY
 # Ir a: GitHub > Actions > Ver logs
 
 # Verificar conectividad
-curl https://tu-backend.onrender.com/health
-```
+curl https://tpi-devops-bzi6.onrender.com/
 
 #### **3. Base de Datos**
 
