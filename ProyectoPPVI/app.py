@@ -50,6 +50,7 @@ if os.getenv('IS_PRODUCTION') == 'true':
     # En producción, permitir solo el dominio de Vercel
     CORS(app, origins=[
         "https://tpi-devops-git-main-ladyfantasys-projects.vercel.app/*",
+        "https://proyecto-ppiv-front.vercel.app/*",
         "https://*.vercel.app/*"  # Para cualquier subdominio de Vercel
     ])
 else:
